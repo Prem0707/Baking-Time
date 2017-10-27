@@ -5,9 +5,9 @@ package utils;
  * This is the class which holds all the constants used in this project.
  */
 
-public class Constants {
+class Constants {
 
     //Base URL
-    public static final String BAKING_BASE_URL = "http://go.udacity.com";
-    public static final String BAKING_SUPPORT_URL = "android-baking-app-json";
+     static final String BAKING_BASE_URL = "http://go.udacity.com";
+     static final String BAKING_SUPPORT_URL = "android-baking-app-json";
 }

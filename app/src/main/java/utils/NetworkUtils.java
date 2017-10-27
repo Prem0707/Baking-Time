@@ -45,6 +45,7 @@ public class NetworkUtils {
      */
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {
+        //Create a HttpURLConnection object
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = urlConnection.getInputStream();
@@ -62,5 +63,4 @@ public class NetworkUtils {
             urlConnection.disconnect();
         }
     }
-
 }
