@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class NetworkUtils {
 
     //Build the URL to query the data
-    ///http://go.udacity.com/android-baking-app-json
+        ///http://go.udacity.com/android-baking-app-json
 
     public static URL buildURL() {
 
