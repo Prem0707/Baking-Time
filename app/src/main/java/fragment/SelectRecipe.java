@@ -9,12 +9,18 @@ import android.view.ViewGroup;
 
 import com.prem.android.bakingtime.R;
 
+import java.util.ArrayList;
+
+import interfaces.TaskCompleted;
+import models.Recipe;
+
 /**
  * A simple fragment which will contain the MainRecipe cards.
  */
-public class SelectRecipe extends Fragment{
+public class SelectRecipe extends Fragment implements TaskCompleted{
 
 
+    ArrayList<Recipe> recipeList;
     public SelectRecipe() {
         // Required empty public constructor
     }
@@ -33,4 +39,8 @@ public class SelectRecipe extends Fragment{
         super.onStart();
     }
 
+    @Override
+    public void onTaskCompleted(ArrayList<Recipe> mRecipe) {
+        this.recipeList = mRecipe;
+    }
 }

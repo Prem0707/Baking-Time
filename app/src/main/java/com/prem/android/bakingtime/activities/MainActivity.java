@@ -7,15 +7,11 @@ import android.widget.Toast;
 
 import com.prem.android.bakingtime.R;
 
-import java.util.ArrayList;
-
 import fragment.SelectRecipe;
-import interfaces.TaskCompleted;
-import models.Recipe;
 import utils.AsyncTaskRecipe;
 import utils.NetworkUtils;
 
-public class MainActivity extends AppCompatActivity implements TaskCompleted{
+public class MainActivity extends AppCompatActivity{
 
 
     @Override
@@ -38,10 +34,5 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted{
         asyncTaskRecipe.execute();
 
         Toast.makeText(this, NetworkUtils.buildURL().toString(), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onTaskCompleted(ArrayList<Recipe> mRecipe) {
-
     }
 }
