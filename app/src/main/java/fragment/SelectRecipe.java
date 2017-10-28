@@ -12,7 +12,7 @@ import com.prem.android.bakingtime.R;
 /**
  * A simple fragment which will contain the MainRecipe cards.
  */
-public class SelectRecipe extends Fragment {
+public class SelectRecipe extends Fragment{
 
 
     public SelectRecipe() {
@@ -25,6 +25,12 @@ public class SelectRecipe extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_select_recipe, container, false);
+    }
+
+     //Called when the Fragment is visible to the user
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
 }
