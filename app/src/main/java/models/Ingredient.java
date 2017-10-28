@@ -10,7 +10,7 @@ class Ingredient {
     private String measure;
     private String ingredient;
 
-    public Ingredient({
+    public Ingredient(){
 
     }
 
