@@ -61,8 +61,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onStartLoading(){
                 super.onStartLoading();
-                if(args == null){
-                    return;
+                if(mRecipe != null){
+                    deliverResult(mRecipe);
+                }else{
+                    forceLoad();
                 }
             }
 
@@ -82,6 +84,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     return null;
                 }
              return null;
+            }
+
+            /**
+             * Sends the result of the load to the registered listener.
+             *
+             * @param recipe The result of the load
+             */
+            public void deliverResult(ArrayList<Recipe> recipe) {
+                mRecipe = recipe;
+                super.deliverResult(mRecipe);
             }
         };
     }
