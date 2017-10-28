@@ -6,7 +6,7 @@ package models;
 
 class Step {
 
-    private int i;d
+    private int id;
     private String shortDescription;
     private String description;
     private String videoURL;
