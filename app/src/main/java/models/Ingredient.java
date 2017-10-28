@@ -4,9 +4,9 @@ package models;
  * Created by Prem on 28-10-2017.
  */
 
-class Ingredient {
+public class Ingredient {
 
-    private int quantity;
+    private double quantity;
     private String measure;
     private String ingredient;
 
@@ -20,11 +20,11 @@ class Ingredient {
         this.ingredient = ingredient;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 

@@ -9,17 +9,18 @@ import java.util.ArrayList;
 public class Recipe {
 
     private int id;
+    private int servings;
     private String name;
     private String image;
     private ArrayList<Ingredient> ingredients;
     private ArrayList<Step> steps;
 
 
-
-    public Recipe(int id, String name, String image, ArrayList<Ingredient> ingredients, ArrayList<Step> steps) {
+    public Recipe(int id, String name, String image, int servings, ArrayList<Ingredient> ingredients, ArrayList<Step> steps) {
         this.id = id;
         this.name = name;
         this.image = image;
+        this.servings = servings;
         this.ingredients = ingredients;
         this.steps = steps;
     }
@@ -67,5 +68,13 @@ public class Recipe {
 
     public void setSteps(ArrayList<Step> steps) {
         this.steps = steps;
+    }
+
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
     }
 }
