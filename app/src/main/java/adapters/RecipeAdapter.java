@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import models.Recipe;
 
-import static android.support.v7.widget.RecyclerView.*;
+import static android.support.v7.widget.RecyclerView.ViewHolder;
 
 /**
  * Created by Prem on 29-10-2017.
@@ -25,10 +25,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
 
     private ArrayList<Recipe> mRecipeDetails;
+    private Context mContext;
 
     public RecipeAdapter(Context context) {
+        this.mContext = context;
     }
-
 
     /**
      * Called when RecyclerView needs a new of the given type to represent an item.
@@ -93,7 +94,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             mRecipeName = itemView.findViewById(R.id.recipe_name);
             mRecipeServing = itemView.findViewById(R.id.recipe_serving);
             mCardView = itemView.findViewById(R.id.recipe_cardview);
-
         }
     }
 
