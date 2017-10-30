@@ -13,6 +13,7 @@ import com.prem.android.bakingtime.R;
 
 import java.util.ArrayList;
 
+import extras.RecipeImageProvider;
 import models.Recipe;
 
 import static android.support.v7.widget.RecyclerView.ViewHolder;
@@ -61,6 +62,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         holder.mRecipeName.setText(recipeName);
         holder.mRecipeServing.setText("Servings:" + servings);
+        holder.mRecipeImage.setImageBitmap(RecipeImageProvider.provideRecipeImage(mContext.getResources(),position));
     }
 
     /**
