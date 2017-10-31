@@ -26,9 +26,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
 
     private ArrayList<Recipe> mRecipeDetails;
+    private final RecyclerViewClickListener mClickHandler;
     private Context mContext;
 
+    public interface RecyclerViewClickListener  {
+        void onRecipeClick(Recipe positionOfSelectedRecipe);
+    }
+
     public RecipeAdapter(Context context) {
+        this.mClickHandler = (RecyclerViewClickListener) context;
         this.mContext = context;
     }
 
@@ -82,7 +88,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     /**
      * A Simple ViewHolder for the RecyclerView
      */
-    public static class RecipeViewHolder extends ViewHolder {
+    public class RecipeViewHolder extends ViewHolder {
 
         CardView mCardView;
         ImageView mRecipeImage;
@@ -96,8 +102,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             mRecipeName = itemView.findViewById(R.id.recipe_name);
             mRecipeServing = itemView.findViewById(R.id.recipe_serving);
             mCardView = itemView.findViewById(R.id.recipe_cardview);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mClickHandler.onRecipeClick(mRecipeDetails.get(getAdapterPosition()));
+                }
+            });
         }
-    }
+        }
 
     public void setDataset(ArrayList<Recipe> dataset) {
         this.mRecipeDetails = dataset;

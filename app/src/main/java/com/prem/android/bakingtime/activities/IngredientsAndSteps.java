@@ -8,7 +8,7 @@ import com.prem.android.bakingtime.R;
 
 import fragment.IngreAndSteps;
 
-public class IngredientsAndActivity extends AppCompatActivity {
+public class IngredientsAndSteps extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class IngredientsAndActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction()
-                .add(R.id.view_holder_for_ingredients_steps_steps, fragmentRecipe)
+                .add(R.id.view_holder_for_ingredients_steps, fragmentRecipe)
                 .commit();
     }
 

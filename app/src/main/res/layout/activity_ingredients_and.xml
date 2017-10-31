@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.prem.android.bakingtime.activities.IngredientsAndActivity">
+    tools:context="com.prem.android.bakingtime.activities.IngredientsAndSteps">
 
     <FrameLayout
-        android:id="@+id/view_holder_for_ingredients_steps_steps"
+        android:id="@+id/view_holder_for_ingredients_steps"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

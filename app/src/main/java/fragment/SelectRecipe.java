@@ -1,7 +1,10 @@
 package fragment;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,25 +13,34 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.prem.android.bakingtime.R;
+import com.prem.android.bakingtime.activities.MainActivity;
 
 import java.util.ArrayList;
 
 import adapters.RecipeAdapter;
 import interfaces.TaskCompleted;
+import models.Recipe;
 import utils.AsyncTaskRecipe;
+import utils.Constants;
 
 /**
  * A simple fragment which will contain the MainRecipe cards.
  */
-public class SelectRecipe extends Fragment implements TaskCompleted{
+public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapter.RecyclerViewClickListener{
 
 
     ArrayList<models.Recipe> recipeList;
     private RecipeAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
+    Context mContext;
+
 
     // required Constructor
-    public SelectRecipe() { }
+    public SelectRecipe ( ){}
+
+    public SelectRecipe(MainActivity mainActivity) {
+        this.mContext = mainActivity;
+    }
     RecyclerView mRecyclerView;
 
     @Override
@@ -61,5 +73,12 @@ public class SelectRecipe extends Fragment implements TaskCompleted{
         this.recipeList = mRecipe;
         // now recipeList has data
         adapter.setDataset(recipeList);
+    }
+
+    @Override
+    public void onRecipeClick(Recipe position) {
+        Intent toIngredientAndSteps = new Intent(mContext, IngreAndSteps.class);
+        toIngredientAndSteps.putExtra(Constants.SELECTED_RECIPE, (Parcelable) recipeList.get(position));
+        startActivity(toIngredientAndSteps);
     }
 }

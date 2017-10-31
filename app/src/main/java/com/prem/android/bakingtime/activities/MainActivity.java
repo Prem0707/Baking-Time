@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         //create SelectRecipe fragment
-        SelectRecipe fragmentRecipe = new SelectRecipe();
+        SelectRecipe fragmentRecipe = new SelectRecipe(this);
 
         //add the fragment to its container using fragmentmanager and transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
