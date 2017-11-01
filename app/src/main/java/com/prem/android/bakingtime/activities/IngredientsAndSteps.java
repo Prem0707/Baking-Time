@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.prem.android.bakingtime.R;
 
-import fragment.IngreAndSteps;
+import fragment.StepsToMakeRecipe;
 import models.Recipe;
 import utils.Constants;
 
@@ -27,7 +27,7 @@ public class IngredientsAndSteps extends AppCompatActivity {
             Toast.makeText(this, "No data obtained", Toast.LENGTH_LONG);
         }
         //create SelectRecipe fragment
-        IngreAndSteps fragmentRecipe = new IngreAndSteps();
+        StepsToMakeRecipe fragmentRecipe = new StepsToMakeRecipe();
 
         //add the fragment to its container using fragmentmanager and transaction
         FragmentManager fragmentManager = getSupportFragmentManager();

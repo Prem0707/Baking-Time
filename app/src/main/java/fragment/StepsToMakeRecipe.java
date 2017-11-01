@@ -12,10 +12,10 @@ import com.prem.android.bakingtime.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class IngreAndSteps extends Fragment {
+public class StepsToMakeRecipe extends Fragment {
 
 
-    public IngreAndSteps() {
+    public StepsToMakeRecipe() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class IngreAndSteps extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ingre_and_steps, container, false);
+        return inflater.inflate(R.layout.fragment_steps_to_make_recipe, container, false);
     }
 
 }
