@@ -30,11 +30,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     private Context mContext;
 
     public interface RecyclerViewClickListener  {
-        void onRecipeClick(Recipe positionOfSelectedRecipe);
+        void onRecipeClick(int positionOfSelectedRecipe);
     }
 
-    public RecipeAdapter(Context context) {
-        this.mClickHandler = (RecyclerViewClickListener) context;
+    public RecipeAdapter(RecyclerViewClickListener mClickHandler) {
+       this.mClickHandler = mClickHandler;
+    }
+
+    public void provideContext(Context context){
         this.mContext = context;
     }
 
@@ -106,7 +109,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mClickHandler.onRecipeClick(mRecipeDetails.get(getAdapterPosition()));
+                    mClickHandler.onRecipeClick(getAdapterPosition());
                 }
             });
         }

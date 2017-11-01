@@ -3,18 +3,29 @@ package com.prem.android.bakingtime.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.prem.android.bakingtime.R;
 
 import fragment.IngreAndSteps;
+import models.Recipe;
+import utils.Constants;
 
 public class IngredientsAndSteps extends AppCompatActivity {
+
+    private Recipe mRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients_and);
 
+        if(getIntent().getParcelableExtra(Constants.SELECTED_RECIPE) != null){
+            mRecipe = getIntent().getParcelableExtra(Constants.SELECTED_RECIPE);
+            getSupportActionBar().setTitle(getTitle());
+        }else{
+            Toast.makeText(this, "No data obtained", Toast.LENGTH_LONG);
+        }
         //create SelectRecipe fragment
         IngreAndSteps fragmentRecipe = new IngreAndSteps();
 

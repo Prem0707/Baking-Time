@@ -13,13 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.prem.android.bakingtime.R;
+import com.prem.android.bakingtime.activities.IngredientsAndSteps;
 import com.prem.android.bakingtime.activities.MainActivity;
 
 import java.util.ArrayList;
 
 import adapters.RecipeAdapter;
 import interfaces.TaskCompleted;
-import models.Recipe;
 import utils.AsyncTaskRecipe;
 import utils.Constants;
 
@@ -38,7 +38,8 @@ public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapt
     // required Constructor
     public SelectRecipe ( ){}
 
-    public SelectRecipe(MainActivity mainActivity) {
+
+    public void provideContext(MainActivity mainActivity) {
         this.mContext = mainActivity;
     }
     RecyclerView mRecyclerView;
@@ -57,7 +58,8 @@ public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapt
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new RecipeAdapter(getContext());
+        adapter = new RecipeAdapter(this);
+        adapter.provideContext(getContext());
         mRecyclerView.setAdapter(adapter);
         return view;
     }
@@ -76,9 +78,10 @@ public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapt
     }
 
     @Override
-    public void onRecipeClick(Recipe position) {
-        Intent toIngredientAndSteps = new Intent(mContext, IngreAndSteps.class);
+    public void onRecipeClick(int position) {
+        Intent toIngredientAndSteps = new Intent(mContext, IngredientsAndSteps.class);
         toIngredientAndSteps.putExtra(Constants.SELECTED_RECIPE, (Parcelable) recipeList.get(position));
         startActivity(toIngredientAndSteps);
     }
+
 }
