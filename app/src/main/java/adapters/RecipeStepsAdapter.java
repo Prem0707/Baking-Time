@@ -1,5 +1,6 @@
 package adapters;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
 
     private ArrayList<Step> mStepsArrayList;
+    Context mContext;
     /**
      * Called when RecyclerView needs a new of the given type to represent an item.
      * This new ViewHolder should be constructed with a new View that can represent the items
@@ -29,7 +31,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
      */
     @Override
     public RecipeStepsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_recipe_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.steps_of_recipe_raw, parent, false);
         return new RecipeStepsHolder(view);
     }
 
@@ -45,8 +47,11 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     public void onBindViewHolder(RecipeStepsHolder holder, int position) {
 
         Step mStep = mStepsArrayList.get(position);
-        holder.mRecipeIndex.setText(mStep.getId() + 1);
-        holder.mRecipeStep.setText(mStep.getShortDescription());
+        String shortDescription = mStep.getShortDescription();
+        int stepIndex = mStep.getId()+1;
+
+       // holder.recipeIndex.setText(stepIndex);
+        holder.recipeStep.setText(shortDescription);
     }
 
     /**
@@ -62,22 +67,32 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         }
     }
 
+    public void provideContext(Context context) {
+        this.mContext = context;
+    }
+
+
     /**
      * A Simple ViewHolder for the RecyclerView
      */
     public class RecipeStepsHolder extends RecyclerView.ViewHolder {
 
-        CardView mCardView;
-        TextView mRecipeIndex;
-        TextView mRecipeStep;
+        CardView cardView;
+       // TextView recipeIndex;
+        TextView recipeStep;
 
 
         private RecipeStepsHolder(View itemView) {
             super(itemView);
 
-            mRecipeIndex = itemView.findViewById(R.id.step_index);
-            mRecipeStep = itemView.findViewById(R.id.step_description);
-            mCardView = itemView.findViewById(R.id.steps_cardview);
+            //recipeIndex = itemView.findViewById(R.id.steps_index);
+            recipeStep = itemView.findViewById(R.id.steps_description);
+            cardView = itemView.findViewById(R.id.steps_cardview);
         }
+    }
+
+    public void setDataset(ArrayList<Step> dataset) {
+        this.mStepsArrayList = dataset;
+        notifyDataSetChanged();
     }
 }

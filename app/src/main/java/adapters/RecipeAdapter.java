@@ -56,7 +56,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     /**
      * Called by RecyclerView to display the data at the specified position. This method should
      * update the contents of the  to reflect the item at the given position.
-     *
      * @param holder   The ViewHolder which should be updated to represent the contents of the
      *                 item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.

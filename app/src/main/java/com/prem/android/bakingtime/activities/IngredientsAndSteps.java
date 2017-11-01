@@ -20,14 +20,16 @@ public class IngredientsAndSteps extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients_and);
 
+        //create SelectRecipe fragment
+        StepsToMakeRecipe fragmentRecipe = new StepsToMakeRecipe();
+
         if(getIntent().getParcelableExtra(Constants.SELECTED_RECIPE) != null){
             mRecipe = getIntent().getParcelableExtra(Constants.SELECTED_RECIPE);
-            getSupportActionBar().setTitle(getTitle());
+            getSupportActionBar().setTitle(mRecipe.getName());
+            fragmentRecipe.provideRecipeDetails(mRecipe);
         }else{
             Toast.makeText(this, "No data obtained", Toast.LENGTH_LONG);
         }
-        //create SelectRecipe fragment
-        StepsToMakeRecipe fragmentRecipe = new StepsToMakeRecipe();
 
         //add the fragment to its container using fragmentmanager and transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
