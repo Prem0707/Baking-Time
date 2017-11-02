@@ -88,6 +88,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
             //recipeIndex = itemView.findViewById(R.id.steps_index);
             recipeStep = itemView.findViewById(R.id.steps_description);
             cardView = itemView.findViewById(R.id.steps_cardview);
+
         }
     }
 
