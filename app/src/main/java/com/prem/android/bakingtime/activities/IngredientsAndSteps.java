@@ -22,6 +22,7 @@ public class IngredientsAndSteps extends AppCompatActivity {
 
         //create SelectRecipe fragment
         StepsToMakeRecipe fragmentRecipe = new StepsToMakeRecipe();
+        fragmentRecipe.provideContext(this);
 
         if(getIntent().getParcelableExtra(Constants.SELECTED_RECIPE) != null){
             mRecipe = getIntent().getParcelableExtra(Constants.SELECTED_RECIPE);

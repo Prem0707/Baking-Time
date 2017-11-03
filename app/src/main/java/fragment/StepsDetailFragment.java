@@ -39,7 +39,7 @@ public class StepsDetailFragment extends Fragment {
     private SimpleExoPlayer mExoPlayer;
     private Context context;
 
-    public StepsDetailFragment(Context context){
+    public void  provideContext(Context context){
         this.context = context;
     }
 
@@ -52,7 +52,7 @@ public class StepsDetailFragment extends Fragment {
         //Initialise the Player view;
         mPlayerview = (SimpleExoPlayerView) view.findViewById(playerView);
         //Initialise the Player
-        initialisePlayer(Uri.parse());
+        //initialisePlayer(Uri.parse());
         return view;
     }
 

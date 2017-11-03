@@ -1,7 +1,10 @@
 package fragment;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,23 +13,33 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.prem.android.bakingtime.R;
+import com.prem.android.bakingtime.activities.IngredientsAndSteps;
+
+import java.util.ArrayList;
 
 import adapters.RecipeStepsAdapter;
 import models.Recipe;
+import models.Step;
+import utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StepsToMakeRecipe extends Fragment {
+public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.RecViewListener{
 
     Recipe mRecipeDetails;
+    Context mContext;
+    private ArrayList<Step> mSteps;
 
     public StepsToMakeRecipe() {
         // Required empty public constructor
     }
 
     public void provideRecipeDetails(Recipe recipeDetails){
-        this.mRecipeDetails = recipeDetails;
+        this.mSteps = recipeDetails.getSteps();
+    }
+    public void provideContext(Context context){
+        this.mContext = context;
     }
 
 
@@ -41,13 +54,17 @@ public class StepsToMakeRecipe extends Fragment {
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerview.setLayoutManager(mLinearLayoutManager);
-        RecipeStepsAdapter mRecipeStepsAdapter = new RecipeStepsAdapter();
+        RecipeStepsAdapter mRecipeStepsAdapter = new RecipeStepsAdapter(this);
         mRecipeStepsAdapter.setDataset(mRecipeDetails.getSteps());
         mRecipeStepsAdapter.provideContext(getContext());
         mRecyclerview.setAdapter(mRecipeStepsAdapter);
         return view;
     }
 
-
-
+    @Override
+    public void onStepClicked(int positionOfSelectedStep) {
+        Intent toIngredientAndSteps = new Intent(mContext, IngredientsAndSteps.class);
+        toIngredientAndSteps.putExtra(Constants.STEP_TO_MAKE, (Parcelable) mSteps.get(positionOfSelectedStep));
+        startActivity(toIngredientAndSteps);
+    }
 }

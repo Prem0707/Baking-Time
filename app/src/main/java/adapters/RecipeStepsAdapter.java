@@ -22,7 +22,18 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
 
     private ArrayList<Step> mStepsArrayList;
+    private RecViewListener mRecViewListener;
     Context mContext;
+
+    public interface RecViewListener{
+        void onStepClicked(int positionOfSelectedStep);
+    }
+
+    public RecipeStepsAdapter(RecViewListener recViewListener){
+        this.mRecViewListener = recViewListener;
+    }
+
+
     /**
      * Called when RecyclerView needs a new of the given type to represent an item.
      * This new ViewHolder should be constructed with a new View that can represent the items
@@ -89,6 +100,12 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
             recipeStep = itemView.findViewById(R.id.steps_description);
             cardView = itemView.findViewById(R.id.steps_cardview);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecViewListener.onStepClicked(getAdapterPosition());
+                }
+            });
         }
     }
 
