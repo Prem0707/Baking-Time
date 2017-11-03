@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.prem.android.bakingtime.R;
-import com.prem.android.bakingtime.activities.IngredientsAndSteps;
+import com.prem.android.bakingtime.activities.DetailSteps;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,6 @@ import utils.Constants;
  */
 public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.RecViewListener{
 
-    Recipe mRecipeDetails;
     Context mContext;
     private ArrayList<Step> mSteps;
 
@@ -63,7 +62,7 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
 
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
-        Intent toIngredientAndSteps = new Intent(mContext, IngredientsAndSteps.class);
+        Intent toIngredientAndSteps = new Intent(mContext, DetailSteps.class);
         toIngredientAndSteps.putExtra(Constants.STEP_TO_MAKE, (Parcelable) mSteps.get(positionOfSelectedStep));
         startActivity(toIngredientAndSteps);
     }

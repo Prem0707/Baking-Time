@@ -14,10 +14,6 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.prem.android.bakingtime.R;
 
-import java.util.ArrayList;
-
-import models.Step;
-
 import static com.prem.android.bakingtime.R.id.playerView;
 
 /**
@@ -25,8 +21,10 @@ import static com.prem.android.bakingtime.R.id.playerView;
  */
 public class StepsDetailFragment extends Fragment {
 
-    private ArrayList<Step> mArrayOfSteps;
+
     private TextView mDetailedTextView;
+    private String mVideoURL;
+    private String mDescription;
     public StepsDetailFragment() {
         // Required empty public constructor
     }
@@ -39,8 +37,9 @@ public class StepsDetailFragment extends Fragment {
         this.context = context;
     }
 
-    public void provideData(ArrayList<Step> mRecipeStep){
-        this.mArrayOfSteps = mRecipeStep;
+    public void provideData(String videoURL, String detailedDescription){
+        this.mVideoURL = videoURL;
+        this.mDescription = detailedDescription;
     }
 
     @Override
@@ -49,11 +48,12 @@ public class StepsDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
         mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
+        mDetailedTextView.setText(mDescription);
 
         //Initialise the Player view;
         mPlayerview = (SimpleExoPlayerView) view.findViewById(playerView);
         //Initialise the Player
-        //initialisePlayer(Uri.parse());
+        //initialisePlayer(Uri.parse(mvideoURL));
         return view;
     }
 

@@ -7,15 +7,13 @@ import android.widget.Toast;
 
 import com.prem.android.bakingtime.R;
 
-import java.util.ArrayList;
-
 import fragment.StepsDetailFragment;
 import models.Step;
 import utils.Constants;
 
 public class DetailSteps extends AppCompatActivity {
 
-    private ArrayList<Step> mRecipeSteps;
+    private Step mRecipeStep;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +24,9 @@ public class DetailSteps extends AppCompatActivity {
         stepsDetailFragment.provideContext(this);
 
         if(getIntent().getParcelableExtra(Constants.STEP_TO_MAKE) != null){
-            mRecipeSteps = getIntent().getParcelableExtra(Constants.SELECTED_RECIPE);
+            mRecipeStep = getIntent().getParcelableExtra(Constants.SELECTED_RECIPE);
             //getSupportActionBar().setTitle(mRecipe.getName());
-            stepsDetailFragment.provideData(mRecipeSteps);
+            stepsDetailFragment.provideData(mRecipeStep.getVideoURL(), mRecipeStep.getDescription());
         }else{
             Toast.makeText(this, "No data obtained", Toast.LENGTH_LONG);
         }
