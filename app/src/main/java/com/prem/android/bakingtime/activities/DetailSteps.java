@@ -14,6 +14,7 @@ import utils.Constants;
 public class DetailSteps extends AppCompatActivity {
 
     private Step mRecipeStep;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +24,15 @@ public class DetailSteps extends AppCompatActivity {
         StepsDetailFragment stepsDetailFragment = new StepsDetailFragment();
         stepsDetailFragment.provideContext(this);
 
-        if(getIntent().getParcelableExtra(Constants.STEP_TO_MAKE) != null){
-            mRecipeStep = getIntent().getParcelableExtra(Constants.SELECTED_RECIPE);
+        if (getIntent().getParcelableExtra(Constants.STEP_TO_MAKE) != null) {
+            mRecipeStep = getIntent().getParcelableExtra(Constants.STEP_TO_MAKE);
             //getSupportActionBar().setTitle(mRecipe.getName());
-            stepsDetailFragment.provideData(mRecipeStep.getVideoURL(), mRecipeStep.getDescription());
-        }else{
+            if (mRecipeStep != null) {
+                stepsDetailFragment.provideData(mRecipeStep.getVideoURL(), mRecipeStep.getDescription());
+            } else {
+                Toast.makeText(this, "NO Data Passed to Detail Step", Toast.LENGTH_LONG).show();
+            }
+        } else {
             Toast.makeText(this, "No data obtained", Toast.LENGTH_LONG);
         }
 
