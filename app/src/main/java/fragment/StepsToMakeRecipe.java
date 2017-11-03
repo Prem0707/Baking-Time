@@ -55,7 +55,7 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerview.setLayoutManager(mLinearLayoutManager);
         RecipeStepsAdapter mRecipeStepsAdapter = new RecipeStepsAdapter(this);
-        mRecipeStepsAdapter.setDataset(mRecipeDetails.getSteps());
+        mRecipeStepsAdapter.setDataset(mSteps);
         mRecipeStepsAdapter.provideContext(getContext());
         mRecyclerview.setAdapter(mRecipeStepsAdapter);
         return view;

@@ -32,6 +32,9 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     public RecipeStepsAdapter(RecViewListener recViewListener){
         this.mRecViewListener = recViewListener;
     }
+    public RecipeStepsAdapter(Context context){
+        this.mContext = context;
+    }
 
 
     /**

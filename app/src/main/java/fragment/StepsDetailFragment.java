@@ -8,20 +8,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 import com.prem.android.bakingtime.R;
+
+import java.util.ArrayList;
+
+import models.Step;
 
 import static com.prem.android.bakingtime.R.id.playerView;
 
@@ -30,7 +25,8 @@ import static com.prem.android.bakingtime.R.id.playerView;
  */
 public class StepsDetailFragment extends Fragment {
 
-
+    private ArrayList<Step> mArrayOfSteps;
+    private TextView mDetailedTextView;
     public StepsDetailFragment() {
         // Required empty public constructor
     }
@@ -43,11 +39,16 @@ public class StepsDetailFragment extends Fragment {
         this.context = context;
     }
 
+    public void provideData(ArrayList<Step> mRecipeStep){
+        this.mArrayOfSteps = mRecipeStep;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
+        mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
 
         //Initialise the Player view;
         mPlayerview = (SimpleExoPlayerView) view.findViewById(playerView);
@@ -64,17 +65,17 @@ public class StepsDetailFragment extends Fragment {
     private void initialisePlayer(Uri mediaUri){
      if(mExoPlayer != null){
          //Create an instance of ExoPlayer
-         TrackSelector trackSelector = new DefaultTrackSelector();
-         LoadControl loadControl = new DefaultLoadControl();
-         mExoPlayer = ExoPlayerFactory.newSimpleInstance(context,trackSelector, loadControl );
-         mPlayerview.setPlayer(mExoPlayer);
+        // TrackSelector trackSelector = new DefaultTrackSelector();
+        // LoadControl loadControl = new DefaultLoadControl();
+        // mExoPlayer = ExoPlayerFactory.newSimpleInstance(context,trackSelector, loadControl );
+        // mPlayerview.setPlayer(mExoPlayer);
 
          //Prepare the media Source
-         String userAgent = Util.getUserAgent(context, "Baking Time");
-         MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(context, userAgent),
-                 new DefaultExtractorsFactory(), null, null);
-         mExoPlayer.prepare(mediaSource);
-         mExoPlayer.setPlayWhenReady(true);
+        // String userAgent = Util.getUserAgent(context, "Baking Time");
+        // MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(context, userAgent),
+        //         new DefaultExtractorsFactory(), null, null);
+        // mExoPlayer.prepare(mediaSource);
+        // mExoPlayer.setPlayWhenReady(true);
 
      }
     }
