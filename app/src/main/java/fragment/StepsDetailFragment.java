@@ -43,7 +43,7 @@ public class StepsDetailFragment extends Fragment {
     }
 
     private SimpleExoPlayerView mPlayerview;
-    private SimpleExoPlayer mExoPlayer;
+    private SimpleExoPlayer player;
     private Context context;
 
     public void  provideContext(Context context){
@@ -82,8 +82,7 @@ public class StepsDetailFragment extends Fragment {
                 new DefaultTrackSelector(videoTrackSelectionFactory);
 
          // 2. Create the player
-        SimpleExoPlayer player =
-                ExoPlayerFactory.newSimpleInstance(context, trackSelector);
+         player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
 
         // Bind the player to the view.
         mPlayerview.setPlayer(player);
@@ -104,5 +103,15 @@ public class StepsDetailFragment extends Fragment {
 
         //setPlayWhenReady can be used to start and pause playback
         player.setPlayWhenReady(true);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (player != null) {
+            player.stop();
+            player.release();
+        }
     }
 }
