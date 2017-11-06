@@ -5,4 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="steps_to_make_recipe">Steps to Make Recipe</string>
     <string name="recipe_ingredients">Recipe Ingredients</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

@@ -38,19 +38,20 @@ public class StepsDetailFragment extends Fragment {
     private TextView mDetailedTextView;
     private String mVideoURL;
     private String mDescription;
+
     public StepsDetailFragment() {
         // Required empty public constructor
     }
 
-    private SimpleExoPlayerView mPlayerview;
+    private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer player;
     private Context context;
 
-    public void  provideContext(Context context){
+    public void provideContext(Context context) {
         this.context = context;
     }
 
-    public void provideData(String videoURL, String detailedDescription){
+    public void provideData(String videoURL, String detailedDescription) {
         this.mVideoURL = videoURL;
         this.mDescription = detailedDescription;
     }
@@ -60,16 +61,17 @@ public class StepsDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
+        mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.playerView);
         mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
         mDetailedTextView.setText(mDescription);
 
-        if(!mVideoURL.isEmpty()){
+        if (!mVideoURL.isEmpty()) {
             setupExoPlayer();
         }
         return view;
     }
 
-    private void setupExoPlayer(){
+    private void setupExoPlayer() {
 
         // 1. Create a default TrackSelector
         Handler mainHandler = new Handler();
@@ -81,11 +83,11 @@ public class StepsDetailFragment extends Fragment {
         TrackSelector trackSelector =
                 new DefaultTrackSelector(videoTrackSelectionFactory);
 
-         // 2. Create the player
-         player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
+        // 2. Create the player
+        player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
 
         // Bind the player to the view.
-        mPlayerview.setPlayer(player);
+        mPlayerView.setPlayer(player);
 
         // Measures bandwidth during playback. Can be null if not required.
         DefaultBandwidthMeter bandwidthMeasure = new DefaultBandwidthMeter();
@@ -98,7 +100,7 @@ public class StepsDetailFragment extends Fragment {
         // This is the MediaSource representing the media to be played.
         MediaSource videoSource = new ExtractorMediaSource(Uri.parse(mVideoURL),
                 dataSourceFactory, extractorsFactory, null, null);
-         // Prepare the player with the source.
+        // Prepare the player with the source.
         player.prepare(videoSource);
 
         //setPlayWhenReady can be used to start and pause playback
