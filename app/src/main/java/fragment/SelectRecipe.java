@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.prem.android.bakingtime.R;
 import com.prem.android.bakingtime.activities.IngredientsAndSteps;
@@ -22,6 +23,7 @@ import adapters.RecipeAdapter;
 import interfaces.TaskCompleted;
 import utils.AsyncTaskRecipe;
 import utils.Constants;
+import utils.NetworkUtils;
 
 /**
  * A simple fragment which will contain the MainRecipe cards.
@@ -49,9 +51,13 @@ public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapt
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select_recipe, container, false);
 
-        //Initialisation of AsyncTask to get raw data
-        AsyncTaskRecipe asyncTaskRecipe = new AsyncTaskRecipe(this);
-        asyncTaskRecipe.execute();
+        if(NetworkUtils.checkDeviceOnline(mContext)) {
+            //Initialisation of AsyncTask to get raw data
+            AsyncTaskRecipe asyncTaskRecipe = new AsyncTaskRecipe(this);
+            asyncTaskRecipe.execute();
+        }else{
+            Toast.makeText(mContext, "Check Your Network Connection", Toast.LENGTH_LONG).show();
+        }
 
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recipe_recyclerview);
 

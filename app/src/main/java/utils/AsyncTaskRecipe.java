@@ -45,7 +45,7 @@ public class AsyncTaskRecipe extends AsyncTask<Void, Void, ArrayList<Recipe>> {
                 if(responseForRecipe != null) {
                     return recipeJsonParcer.getRecipeData(responseForRecipe);
                 }else{
-                    Log.v("TAG", "responseFronAPI is null");
+                    Log.v("TAG", "responseFromAPI is null");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
