@@ -62,9 +62,9 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
         Step mStep = mStepsArrayList.get(position);
         String shortDescription = mStep.getShortDescription();
-        int stepIndex = mStep.getId()+1;
+        String stepIndex = String.valueOf(mStep.getId()+1) +".";
 
-       // holder.recipeIndex.setText(stepIndex);
+        holder.recipeIndex.setText(stepIndex);
         holder.recipeStep.setText(shortDescription);
     }
 
@@ -92,14 +92,14 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     public class RecipeStepsHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
-       // TextView recipeIndex;
+        TextView recipeIndex;
         TextView recipeStep;
 
 
         private RecipeStepsHolder(View itemView) {
             super(itemView);
 
-            //recipeIndex = itemView.findViewById(R.id.steps_index);
+            recipeIndex = itemView.findViewById(R.id.step_index);
             recipeStep = itemView.findViewById(R.id.steps_description);
             cardView = itemView.findViewById(R.id.steps_cardview);
 

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -28,6 +29,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.prem.android.bakingtime.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * This fragment will contain the videos of steps along with detailed Step of recipe preparation .
@@ -45,15 +47,18 @@ public class StepsDetailFragment extends Fragment {
 
     private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer player;
+    private String mStepUrl;
+    private ImageView mStepThumbnail;
     private Context context;
 
     public void provideContext(Context context) {
         this.context = context;
     }
 
-    public void provideData(String videoURL, String detailedDescription) {
+    public void provideData(String videoURL, String detailedDescription, String imageThumbnail) {
         this.mVideoURL = videoURL;
         this.mDescription = detailedDescription;
+        this.mStepUrl = imageThumbnail;
     }
 
     @Override
@@ -64,12 +69,22 @@ public class StepsDetailFragment extends Fragment {
         mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.playerView);
         mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
         mDetailedTextView.setText(mDescription);
+        mStepThumbnail = (ImageView) view.findViewById(R.id.stepThumbnail);
+
+        //Show only if there is thumbnail URL
+        if (mStepUrl != null) {
+            Uri imageUrl = Uri.parse(mStepUrl);
+
+            Picasso.with(context).load(imageUrl).placeholder(R.drawable.step_thambnail).into(mStepThumbnail);
+            mStepThumbnail.setVisibility(View.VISIBLE);
+        }
 
         if (!mVideoURL.isEmpty()) {
             setupExoPlayer();
         }
         return view;
     }
+
 
     private void setupExoPlayer() {
 

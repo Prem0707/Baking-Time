@@ -28,7 +28,8 @@ public class DetailSteps extends AppCompatActivity {
             mRecipeStep = getIntent().getParcelableExtra(Constants.STEP_TO_MAKE);
             //getSupportActionBar().setTitle(mRecipe.getName());
             if (mRecipeStep != null) {
-                stepsDetailFragment.provideData(mRecipeStep.getVideoURL(), mRecipeStep.getDescription());
+                stepsDetailFragment.provideData(mRecipeStep.getVideoURL(), mRecipeStep.getDescription(),
+                        mRecipeStep.getThumbnailURL());
             } else {
                 Toast.makeText(this, "NO Data Passed to Detail Step", Toast.LENGTH_LONG).show();
             }
