@@ -78,7 +78,6 @@ public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapt
     @Override
     public void onStart() {
         super.onStart();
-        spinner.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -86,6 +85,7 @@ public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapt
         this.recipeList = mRecipe;
         // now recipeList has data
         adapter.setDataset(recipeList);
+        spinner.setVisibility(View.INVISIBLE);
     }
 
     @Override

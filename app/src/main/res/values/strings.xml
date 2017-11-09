@@ -7,4 +7,7 @@
     <string name="recipe_ingredients">Recipe Ingredients</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="steps_to_make">STEPS TO MAKE RECIPE</string>
+    <string name="ingredients">INGREDIENTS</string>
+    <string name="it_is_an_image_which_shows_recipe_images">It is an image, which shows recipe images</string>
 </resources>
