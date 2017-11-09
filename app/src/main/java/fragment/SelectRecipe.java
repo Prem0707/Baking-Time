@@ -15,8 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.prem.android.bakingtime.R;
-import com.prem.android.bakingtime.activities.IngredientsAndSteps;
 import com.prem.android.bakingtime.activities.MainActivity;
+import com.prem.android.bakingtime.activities.RecipeSteps;
 
 import java.util.ArrayList;
 
@@ -29,43 +29,40 @@ import utils.NetworkUtils;
 /**
  * A simple fragment which will contain the MainRecipe cards.
  */
-public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapter.RecyclerViewClickListener{
+public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapter.RecyclerViewClickListener {
 
-
-    ArrayList<models.Recipe> recipeList;
-    private RecipeAdapter adapter;
-    private LinearLayoutManager linearLayoutManager;
-    private ProgressBar spinner;
     Context mContext;
-
+    private RecipeAdapter adapter;
+    private ProgressBar spinner;
+    ArrayList<models.Recipe> recipeList;
 
 
     // required Constructor
-    public SelectRecipe ( ){}
-
+    public SelectRecipe() {
+    }
 
     public void provideContext(MainActivity mainActivity) {
         this.mContext = mainActivity;
     }
-    RecyclerView mRecyclerView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select_recipe, container, false);
-        spinner = (ProgressBar)view.findViewById(R.id.progressBar1);
+        spinner = (ProgressBar) view.findViewById(R.id.progressBar1);
         spinner.setVisibility(View.VISIBLE);
 
         //Initialisation of AsyncTask to get raw data
-        if(NetworkUtils.checkDeviceOnline(mContext)) {
+        if (NetworkUtils.checkDeviceOnline(mContext)) {
             AsyncTaskRecipe asyncTaskRecipe = new AsyncTaskRecipe(this);
             asyncTaskRecipe.execute();
-        }else{
+        } else {
             Toast.makeText(mContext, "Check Your Network Connection", Toast.LENGTH_LONG).show();
         }
 
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.recipe_recyclerview);
-        linearLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerview);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         adapter = new RecipeAdapter(this);
@@ -90,9 +87,12 @@ public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapt
 
     @Override
     public void onRecipeClick(int position) {
-        Intent toIngredientAndSteps = new Intent(mContext, IngredientsAndSteps.class);
-        toIngredientAndSteps.putExtra(Constants.SELECTED_RECIPE, (Parcelable) recipeList.get(position));
-        startActivity(toIngredientAndSteps);
+        goesToStepsToMake(position);
     }
 
+    public void goesToStepsToMake(int position) {
+        Intent recipeSteps = new Intent(mContext, RecipeSteps.class);
+        recipeSteps.putExtra(Constants.SELECTED_RECIPE, (Parcelable) recipeList.get(position));
+        startActivity(recipeSteps);
+    }
 }

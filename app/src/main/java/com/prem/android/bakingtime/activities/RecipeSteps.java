@@ -11,7 +11,7 @@ import fragment.StepsToMakeRecipe;
 import models.Recipe;
 import utils.Constants;
 
-public class IngredientsAndSteps extends AppCompatActivity {
+public class RecipeSteps extends AppCompatActivity {
 
     private Recipe mRecipe;
 
@@ -29,10 +29,10 @@ public class IngredientsAndSteps extends AppCompatActivity {
             getSupportActionBar().setTitle(mRecipe.getName());
             fragmentRecipe.provideRecipeDetails(mRecipe);
         }else{
-            Toast.makeText(this, "No data obtained", Toast.LENGTH_LONG);
+            Toast.makeText(this, "No data obtained", Toast.LENGTH_LONG).show();
         }
 
-        //add the fragment to its container using fragmentmanager and transaction
+        //add the fragment to its container using fragment manager and transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction()

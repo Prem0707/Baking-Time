@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,22 +23,23 @@ import static android.support.v7.widget.RecyclerView.ViewHolder;
  * Created by Prem on 29-10-2017.
  */
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>{
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
 
     private ArrayList<Recipe> mRecipeDetails;
     private final RecyclerViewClickListener mClickHandler;
     private Context mContext;
 
-    public interface RecyclerViewClickListener  {
+
+    public interface RecyclerViewClickListener {
         void onRecipeClick(int positionOfSelectedRecipe);
     }
 
     public RecipeAdapter(RecyclerViewClickListener mClickHandler) {
-       this.mClickHandler = mClickHandler;
+        this.mClickHandler = mClickHandler;
     }
 
-    public void provideContext(Context context){
+    public void provideContext(Context context) {
         this.mContext = context;
     }
 
@@ -56,21 +58,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     /**
      * Called by RecyclerView to display the data at the specified position. This method should
      * update the contents of the  to reflect the item at the given position.
+     *
      * @param holder   The ViewHolder which should be updated to represent the contents of the
      *                 item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
+
     @Override
-    public void onBindViewHolder(RecipeViewHolder holder, int position) {
+    public void onBindViewHolder(RecipeViewHolder holder, final int position) {
 
         Recipe currentRecipe = mRecipeDetails.get(position);
-
         String recipeName = currentRecipe.getName();
         int servings = currentRecipe.getServings();
 
         holder.mRecipeName.setText(recipeName);
         holder.mRecipeServing.setText("Servings:" + servings);
-        holder.mRecipeImage.setImageBitmap(RecipeImageProvider.provideRecipeImage(mContext.getResources(),position));
+        holder.mRecipeImage.setImageBitmap(RecipeImageProvider.provideRecipeImage(mContext.getResources(), position));
     }
 
     /**
@@ -80,9 +83,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
      */
     @Override
     public int getItemCount() {
-        if(mRecipeDetails != null){
+        if (mRecipeDetails != null) {
             return mRecipeDetails.size();
-        }else{
+        } else {
             return 0;
         }
     }
@@ -96,6 +99,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         ImageView mRecipeImage;
         TextView mRecipeName;
         TextView mRecipeServing;
+        Button mIngredients;
+        Button mRecipeSteps;
 
         private RecipeViewHolder(View itemView) {
             super(itemView);
@@ -104,6 +109,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             mRecipeName = itemView.findViewById(R.id.recipe_name);
             mRecipeServing = itemView.findViewById(R.id.recipe_serving);
             mCardView = itemView.findViewById(R.id.recipe_cardview);
+            mIngredients = itemView.findViewById(R.id.goes_to_ingredients);
+            mRecipeSteps = itemView.findViewById(R.id.steps_to_make);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -112,7 +119,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 }
             });
         }
-        }
+    }
 
     public void setDataset(ArrayList<Recipe> dataset) {
         this.mRecipeDetails = dataset;
