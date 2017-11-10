@@ -18,8 +18,8 @@ public class RecipeSteps extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ingredients_and);
-
+        setContentView(R.layout.activity_recipe_steps);
+        
         //create SelectRecipe fragment
         StepsToMakeRecipe fragmentRecipe = new StepsToMakeRecipe();
         fragmentRecipe.provideContext(this);
