@@ -8,7 +8,7 @@ import com.prem.android.bakingtime.R;
 
 import fragment.SelectRecipe;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
 
     @Override
@@ -16,16 +16,16 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //create SelectRecipe fragment
-        SelectRecipe fragmentRecipe = new SelectRecipe();
-        fragmentRecipe.provideContext(this);
+        if (savedInstanceState == null) {
+            //create SelectRecipe fragment
+            SelectRecipe fragmentRecipe = new SelectRecipe();
+            fragmentRecipe.provideContext(this);
 
-        //add the fragment to its container using fragmentmanager and transaction
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        fragmentManager.beginTransaction()
-                .add(R.id.view_holder_for_select_recipe, fragmentRecipe)
-                .commit();
-
+            //add the fragment to its container using fragment manager and transaction
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .add(R.id.view_holder_for_select_recipe, fragmentRecipe)
+                    .commit();
+        }
     }
 }

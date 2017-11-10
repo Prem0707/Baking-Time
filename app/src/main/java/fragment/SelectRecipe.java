@@ -53,12 +53,17 @@ public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapt
         spinner = (ProgressBar) view.findViewById(R.id.progressBar1);
         spinner.setVisibility(View.VISIBLE);
 
-        //Initialisation of AsyncTask to get raw data
-        if (NetworkUtils.checkDeviceOnline(mContext)) {
-            AsyncTaskRecipe asyncTaskRecipe = new AsyncTaskRecipe(this);
-            asyncTaskRecipe.execute();
-        } else {
-            Toast.makeText(mContext, "Check Your Network Connection", Toast.LENGTH_LONG).show();
+        if(savedInstanceState == null) {
+
+            //Initialisation of AsyncTask to get raw data
+            if (NetworkUtils.checkDeviceOnline(mContext)) {
+                AsyncTaskRecipe asyncTaskRecipe = new AsyncTaskRecipe(this);
+                asyncTaskRecipe.execute();
+            } else {
+                Toast.makeText(mContext, "Check Your Network Connection", Toast.LENGTH_LONG).show();
+            }
+        }else{
+            recipeList = savedInstanceState.getParcelableArrayList(Constants.RECIPE_LIST);
         }
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerview);
@@ -75,6 +80,12 @@ public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapt
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(Constants.RECIPE_LIST, recipeList);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

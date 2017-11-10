@@ -39,5 +39,4 @@ public class RecipeSteps extends AppCompatActivity {
                 .add(R.id.view_holder_for_ingredients_steps, fragmentRecipe)
                 .commit();
     }
-
 }

@@ -14,4 +14,6 @@ public class Constants {
     static final String BAKING_SUPPORT_URL = "topher/2017/May/59121517_baking/baking.json";
     public static final String SELECTED_RECIPE = "user_selected_recipe";
     public static final String STEP_TO_MAKE = "step_to_make_recipe";
+
+    public static final String RECIPE_LIST ="recipe_list";
 }
