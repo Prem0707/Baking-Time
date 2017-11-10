@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +21,7 @@ import com.prem.android.bakingtime.activities.RecipeSteps;
 import java.util.ArrayList;
 
 import adapters.RecipeAdapter;
+import extras.BasicUtility;
 import interfaces.TaskCompleted;
 import utils.AsyncTaskRecipe;
 import utils.Constants;
@@ -67,9 +68,8 @@ public class SelectRecipe extends Fragment implements TaskCompleted, RecipeAdapt
         }
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerview);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        GridLayoutManager mGridLayoutManager = BasicUtility.gridLayoutManagerAccordingToOrientation(mContext);
+        mRecyclerView.setLayoutManager(mGridLayoutManager);
         adapter = new RecipeAdapter(this);
         adapter.provideContext(getContext());
         mRecyclerView.setAdapter(adapter);
