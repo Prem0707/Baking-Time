@@ -27,17 +27,25 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
     private RecipeAdapter adapter;
     private ProgressBar spinner;
     ArrayList<Recipe> recipeList;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        spinner = (ProgressBar) findViewById(R.id.progressBar1);
+        spinner = (ProgressBar) findViewById(R.id.progress_bar);
         spinner.setVisibility(View.VISIBLE);
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.recipe_recyclerview);
+        GridLayoutManager mGridLayoutManager = BasicUtility.gridLayoutManagerAccordingToOrientation(this);
+        mRecyclerView.setLayoutManager(mGridLayoutManager);
+        adapter = new RecipeAdapter(this, MainActivity.this);
+
         if (savedInstanceState != null) {
-            recipeList = savedInstanceState.getParcelableArrayList(Constants.RECIPE_LIST);
+            this.recipeList = savedInstanceState.getParcelableArrayList(Constants.RECIPE_LIST);
+            adapter.setDataset(recipeList);
+            Toast.makeText(this, "Using Already Save Data", Toast.LENGTH_LONG).show();
         } else {
             boolean checkInternetConnection = NetworkUtils.checkDeviceOnline(this);
             if (checkInternetConnection) {
@@ -48,10 +56,6 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
             }
         }
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recipe_recyclerview);
-        GridLayoutManager mGridLayoutManager = BasicUtility.gridLayoutManagerAccordingToOrientation(this);
-        mRecyclerView.setLayoutManager(mGridLayoutManager);
-        adapter = new RecipeAdapter(this, MainActivity.this);
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -72,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
         this.recipeList = mRecipe;
         // now recipeList has data
         adapter.setDataset(recipeList);
-        spinner.setVisibility(View.INVISIBLE);
     }
 
     @Override
