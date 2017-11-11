@@ -45,7 +45,10 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
         if (savedInstanceState != null) {
             this.recipeList = savedInstanceState.getParcelableArrayList(Constants.RECIPE_LIST);
             adapter.setDataset(recipeList);
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable("BUNDLE_RECYCLER_LAYOUT");
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
             Toast.makeText(this, "Using Already Save Data", Toast.LENGTH_LONG).show();
+
         } else {
             boolean checkInternetConnection = NetworkUtils.checkDeviceOnline(this);
             if (checkInternetConnection) {
@@ -55,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
                 Toast.makeText(this, "Check Your Network Connection", Toast.LENGTH_LONG).show();
             }
         }
-
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(Constants.RECIPE_LIST, recipeList);
+        //save the current recyclerview position
+        outState.putParcelable("BUNDLE_RECYCLER_LAYOUT", mRecyclerView.getLayoutManager().onSaveInstanceState());
         super.onSaveInstanceState(outState);
     }
 
