@@ -97,7 +97,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         TextView mRecipeName;
         TextView mRecipeServing;
         Button mIngredients;
-        Button mRecipeSteps;
 
         private RecipeViewHolder(View itemView) {
             super(itemView);
@@ -107,7 +106,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             mRecipeServing = itemView.findViewById(R.id.recipe_serving);
             mCardView = itemView.findViewById(R.id.recipe_cardview);
             mIngredients = itemView.findViewById(R.id.goes_to_ingredients);
-            mRecipeSteps = itemView.findViewById(R.id.steps_to_make);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

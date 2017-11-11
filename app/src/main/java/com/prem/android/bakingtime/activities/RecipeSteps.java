@@ -19,6 +19,8 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     private Recipe mRecipe;
     private int mSelectedStepPosition;
     private boolean mTwoPaneLayout;
+    private StepsToMakeRecipe fragmentRecipe;
+    private StepsDetailFragment stepsDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +44,24 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         if (findViewById(R.id.select_recipe_two_pane_layout) != null) {
             mTwoPaneLayout = true;
 
+            if (savedInstanceState != null) {
+                //Restore the fragment's instance
+                fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
+                        .getFragment(savedInstanceState, "StepToMakeRecipeFragment");
+
+                //Restore the fragment's instance
+                stepsDetailFragment = (StepsDetailFragment) getSupportFragmentManager()
+                        .getFragment(savedInstanceState, "StepToMakeRecipeFragment");
+            }
             //In two pane mode, add initial fragments
-            StepsToMakeRecipe fragmentRecipe = new StepsToMakeRecipe();
+            fragmentRecipe = new StepsToMakeRecipe();
             fragmentRecipe.provideContext(this);
             fragmentRecipe.provideRecipeDetails(mRecipe);
             fragmentManager.beginTransaction()
                     .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
                     .commit();
 
-            StepsDetailFragment stepsDetailFragment = new StepsDetailFragment();
+            stepsDetailFragment = new StepsDetailFragment();
             stepsDetailFragment.provideContext(this);
             Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
             stepsDetailFragment.provideData(mStep.getVideoURL(), mStep.getDescription(), mStep.getThumbnailURL());
@@ -60,18 +71,32 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
 
         } else {
             mTwoPaneLayout = false;
-            StepsToMakeRecipe fragmentRecipe = new StepsToMakeRecipe();
-            fragmentRecipe.provideContext(this);
-            fragmentRecipe.provideRecipeDetails(mRecipe);
-            fragmentManager.beginTransaction()
-                    .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
-                    .commit();
+            if (savedInstanceState != null) {
+                //Restore the fragment's instance
+                fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
+                        .getFragment(savedInstanceState, "StepToMakeRecipeFragment");
+            } else {
+                fragmentRecipe = new StepsToMakeRecipe();
+                fragmentRecipe.provideContext(this);
+                fragmentRecipe.provideRecipeDetails(mRecipe);
+                fragmentManager.beginTransaction()
+                        .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
+                        .commit();
+            }
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(Constants.RECIPE_OBJECT, mRecipe);
+        outState.putInt("SELECT_RECIPE_DETAIL", mSelectedStepPosition);
+        //Save the fragment's instance
+        if (!mTwoPaneLayout) {
+            getSupportFragmentManager().putFragment(outState, "StepToMAkeRecipeFragment", fragmentRecipe);
+        } else {
+            getSupportFragmentManager().putFragment(outState, "StepToMAkeRecipeFragment", fragmentRecipe);
+            getSupportFragmentManager().putFragment(outState, "StepToDetailFragment", stepsDetailFragment);
+        }
         super.onSaveInstanceState(outState);
     }
 
