@@ -10,9 +10,8 @@
     tools:context="com.prem.android.bakingtime.activities.DetailSteps">
 
     <!--Display the static master list fragment -->
-    <fragment
-        android:id="@+id/master_list_fragment"
-        android:name="com.prem.android.bakingtime.fragment.StepsToMakeRecipe"
+    <FrameLayout
+        android:id="@+id/view_holder_for_steps_detail"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.5" />
@@ -20,7 +19,7 @@
     <View style="@style/Divider" />
 
     <FrameLayout
-        android:id="@+id/view_holder_for_steps_detail"
+        android:id="@+id/view_holder_for_videos_steps"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.5" />

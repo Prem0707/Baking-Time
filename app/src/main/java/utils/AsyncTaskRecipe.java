@@ -1,5 +1,6 @@
 package utils;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import fragment.SelectRecipe;
 import interfaces.TaskCompleted;
 import json_parser.recipeJsonParcer;
 import models.Recipe;
@@ -22,8 +22,8 @@ public class AsyncTaskRecipe extends AsyncTask<Void, Void, ArrayList<Recipe>> {
 
     private final TaskCompleted mCallback;
 
-    public AsyncTaskRecipe(SelectRecipe context) {
-        mCallback = context;
+    public AsyncTaskRecipe(Context context) {
+        mCallback = (TaskCompleted) context;
     }
 
 

@@ -70,7 +70,7 @@ public class NetworkUtils {
     // check if device is online
     public static boolean checkDeviceOnline(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        @SuppressWarnings("ConstantConditions") NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

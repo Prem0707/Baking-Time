@@ -39,8 +39,8 @@ public class DetailSteps extends AppCompatActivity {
 
         //add the fragment to its container using fragment manager and transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
-
-        fragmentManager.beginTransaction().add(R.id.view_holder_for_steps_detail, stepsDetailFragment);
-        // and add the transaction to the back stack
+        fragmentManager.beginTransaction()
+                .add(R.id.view_holder_for_steps_detail, stepsDetailFragment)
+                .commit();
     }
 }

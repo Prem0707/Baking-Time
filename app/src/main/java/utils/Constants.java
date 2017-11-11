@@ -16,4 +16,5 @@ public class Constants {
     public static final String STEP_TO_MAKE = "step_to_make_recipe";
 
     public static final String RECIPE_LIST ="recipe_list";
+    public static final String RECIPE_OBJECT ="recipe_object";
 }
