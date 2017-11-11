@@ -3,7 +3,6 @@ package com.prem.android.bakingtime.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.prem.android.bakingtime.R;
 
@@ -19,8 +18,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     private Recipe mRecipe;
     private int mSelectedStepPosition;
     private boolean mTwoPaneLayout;
-    private StepsToMakeRecipe fragmentRecipe;
-    private StepsDetailFragment stepsDetailFragment;
+    private String mActionBarName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,31 +26,23 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         setContentView(R.layout.activity_recipe_steps);
 
         if (savedInstanceState == null) {
-            if (getIntent().getParcelableExtra(Constants.SELECTED_RECIPE) != null) {
+            if (getIntent().getParcelableExtra(Constants.SELECTED_RECIPE) != null)
                 mRecipe = getIntent().getParcelableExtra(Constants.SELECTED_RECIPE);
-            } else {
-                Toast.makeText(this, "No data obtained", Toast.LENGTH_LONG).show();
-            }
+                mActionBarName = mRecipe.getName();
         } else {
             mRecipe = savedInstanceState.getParcelable(Constants.RECIPE_OBJECT);
+            mActionBarName = savedInstanceState.getString("ACTION_BAR_NAME");
         }
-        getSupportActionBar().setTitle(mRecipe.getName());
+        getSupportActionBar().setTitle(mActionBarName);
 
+        StepsToMakeRecipe fragmentRecipe;
+        StepsDetailFragment stepsDetailFragment;
         // get the fragment manager to handle transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (findViewById(R.id.select_recipe_two_pane_layout) != null) {
             mTwoPaneLayout = true;
 
-            if (savedInstanceState != null) {
-                //Restore the fragment's instance
-                fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
-                        .getFragment(savedInstanceState, "StepToMakeRecipeFragment");
-
-                //Restore the fragment's instance
-                stepsDetailFragment = (StepsDetailFragment) getSupportFragmentManager()
-                        .getFragment(savedInstanceState, "StepToMakeRecipeFragment");
-            }
             //In two pane mode, add initial fragments
             fragmentRecipe = new StepsToMakeRecipe();
             fragmentRecipe.provideContext(this);
@@ -71,11 +61,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
 
         } else {
             mTwoPaneLayout = false;
-            if (savedInstanceState != null) {
-                //Restore the fragment's instance
-                fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
-                        .getFragment(savedInstanceState, "StepToMakeRecipeFragment");
-            } else {
+
                 fragmentRecipe = new StepsToMakeRecipe();
                 fragmentRecipe.provideContext(this);
                 fragmentRecipe.provideRecipeDetails(mRecipe);
@@ -84,20 +70,13 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
                         .commit();
             }
         }
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putParcelable(Constants.RECIPE_OBJECT, mRecipe);
         outState.putInt("SELECT_RECIPE_DETAIL", mSelectedStepPosition);
-        //Save the fragment's instance
-        if (!mTwoPaneLayout) {
-            getSupportFragmentManager().putFragment(outState, "StepToMAkeRecipeFragment", fragmentRecipe);
-        } else {
-            getSupportFragmentManager().putFragment(outState, "StepToMAkeRecipeFragment", fragmentRecipe);
-            getSupportFragmentManager().putFragment(outState, "StepToDetailFragment", stepsDetailFragment);
-        }
-        super.onSaveInstanceState(outState);
+        outState.putString("ACTION_BAR_NAME", mActionBarName);
     }
 
     @Override
