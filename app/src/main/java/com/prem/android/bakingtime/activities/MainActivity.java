@@ -1,5 +1,6 @@
 package com.prem.android.bakingtime.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -50,13 +51,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
             Toast.makeText(this, "Using Already Save Data", Toast.LENGTH_LONG).show();
 
         } else {
-            boolean checkInternetConnection = NetworkUtils.checkDeviceOnline(this);
-            if (checkInternetConnection) {
-                AsyncTaskRecipe asyncTaskRecipe = new AsyncTaskRecipe(this);
-                asyncTaskRecipe.execute();
-            } else {
-                Toast.makeText(this, "Check Your Network Connection", Toast.LENGTH_LONG).show();
-            }
+            callToAsyncTask(this);
         }
         mRecyclerView.setAdapter(adapter);
     }
@@ -87,5 +82,15 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
         Intent recipeSteps = new Intent(this, RecipeSteps.class);
         recipeSteps.putExtra(Constants.SELECTED_RECIPE, (Parcelable) recipeList.get(positionOfSelectedRecipe));
         startActivity(recipeSteps);
+    }
+
+    private void callToAsyncTask(Context context) {
+        boolean checkInternetConnection = NetworkUtils.checkDeviceOnline(this);
+        if (checkInternetConnection) {
+            AsyncTaskRecipe asyncTaskRecipe = new AsyncTaskRecipe(this);
+            asyncTaskRecipe.execute();
+        } else {
+            Toast.makeText(this, "Check Your Network Connection", Toast.LENGTH_LONG).show();
+        }
     }
 }

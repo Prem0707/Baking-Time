@@ -72,7 +72,6 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(Constants.RECIPE_OBJECT, mRecipe);
-        outState.putInt("PositionSelected", mSelectedStepPosition);
         super.onSaveInstanceState(outState);
     }
 
