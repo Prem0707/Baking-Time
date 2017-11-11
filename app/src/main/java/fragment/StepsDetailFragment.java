@@ -40,6 +40,7 @@ public class StepsDetailFragment extends Fragment {
     private TextView mDetailedTextView;
     private String mVideoURL;
     private String mDescription;
+    private long currentPlayerPosition = 0;
 
     public StepsDetailFragment() {
         // Required empty public constructor
@@ -70,6 +71,10 @@ public class StepsDetailFragment extends Fragment {
         mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
         mDetailedTextView.setText(mDescription);
         mStepThumbnail = (ImageView) view.findViewById(R.id.stepThumbnail);
+
+        if(savedInstanceState != null){
+            currentPlayerPosition = savedInstanceState.getLong("PLAYER_POSITION");
+        }
 
         //Show only if there is thumbnail URL
         if (mStepUrl != null) {
@@ -118,6 +123,8 @@ public class StepsDetailFragment extends Fragment {
         // Prepare the player with the source.
         player.prepare(videoSource);
 
+        if (currentPlayerPosition != 0) player.seekTo(currentPlayerPosition);
+
         //setPlayWhenReady can be used to start and pause playback
         player.setPlayWhenReady(true);
     }
@@ -131,4 +138,13 @@ public class StepsDetailFragment extends Fragment {
             player.release();
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (player != null) {
+            outState.putLong("PLAYER_POSITION", player.getCurrentPosition());
+        }
+        super.onSaveInstanceState(outState);
+    }
+
 }

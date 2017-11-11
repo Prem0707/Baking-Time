@@ -75,7 +75,7 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
         } else {
             mSteps = savedInstanceState.getParcelableArrayList("STEPS_ARRAY");
             mRecipeStepsAdapter.setDataset(mSteps);
-            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable("BUNDLE_RECYCLER_LAYOUT");
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable("STEPS_RECYCLER_LAYOUT");
             mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         }
         mRecipeStepsAdapter.provideContext(getContext());

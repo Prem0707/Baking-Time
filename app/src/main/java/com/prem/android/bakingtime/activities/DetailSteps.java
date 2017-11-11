@@ -24,9 +24,13 @@ public class DetailSteps extends AppCompatActivity {
         StepsDetailFragment stepsDetailFragment = new StepsDetailFragment();
         stepsDetailFragment.provideContext(this);
 
-        if (getIntent().getParcelableExtra(Constants.STEP_TO_MAKE) != null) {
-            mRecipeStep = getIntent().getParcelableExtra(Constants.STEP_TO_MAKE);
-            //getSupportActionBar().setTitle(mRecipe.getName());
+        if (savedInstanceState == null) {
+            if (getIntent().getParcelableExtra(Constants.STEP_TO_MAKE) != null) {
+                mRecipeStep = getIntent().getParcelableExtra(Constants.STEP_TO_MAKE);
+            } else {
+                savedInstanceState.getParcelable("STEP_DETAILS");
+            }
+
             if (mRecipeStep != null) {
                 stepsDetailFragment.provideData(mRecipeStep.getVideoURL(), mRecipeStep.getDescription(),
                         mRecipeStep.getThumbnailURL());
@@ -37,10 +41,17 @@ public class DetailSteps extends AppCompatActivity {
             Toast.makeText(this, "No data obtained", Toast.LENGTH_LONG);
         }
 
+
         //add the fragment to its container using fragment manager and transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.view_holder_for_steps_detail, stepsDetailFragment)
                 .commit();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("STEP_DETAILS", mRecipeStep);
     }
 }
