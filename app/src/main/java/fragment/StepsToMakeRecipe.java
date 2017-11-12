@@ -1,7 +1,6 @@
 package fragment;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -28,7 +27,6 @@ import utils.Constants;
  */
 public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.RecViewListener {
 
-    Context mContext;
     private ArrayList<Step> mSteps;
     private RecyclerView mRecyclerView;
     private RecipeStepsAdapter mRecipeStepsAdapter;
@@ -40,11 +38,6 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
     public void provideRecipeDetails(Recipe recipeDetails) {
         this.mSteps = recipeDetails.getSteps();
     }
-
-    public void provideContext(Context context) {
-        this.mContext = context;
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,7 +87,7 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
 
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
-        Intent toIngredientAndSteps = new Intent(mContext, DetailSteps.class);
+        Intent toIngredientAndSteps = new Intent(getActivity(), DetailSteps.class);
         toIngredientAndSteps.putExtra(Constants.STEP_TO_MAKE, (Parcelable) mSteps.get(positionOfSelectedStep));
         startActivity(toIngredientAndSteps);
     }

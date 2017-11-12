@@ -45,14 +45,12 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
 
             //In two pane mode, add initial fragments
             fragmentRecipe = new StepsToMakeRecipe();
-            fragmentRecipe.provideContext(this);
             fragmentRecipe.provideRecipeDetails(mRecipe);
             fragmentManager.beginTransaction()
                     .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
                     .commit();
 
             stepsDetailFragment = new StepsDetailFragment();
-            stepsDetailFragment.provideContext(this);
             Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
             stepsDetailFragment.provideData(mStep.getVideoURL(), mStep.getDescription(), mStep.getThumbnailURL());
             fragmentManager.beginTransaction()
@@ -67,7 +65,6 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
                         .getFragment(savedInstanceState, "RECIPE_FRAG");
             } else {
                 fragmentRecipe = new StepsToMakeRecipe();
-                fragmentRecipe.provideContext(this);
                 fragmentRecipe.provideRecipeDetails(mRecipe);
                 fragmentManager.beginTransaction()
                         .add(R.id.view_holder_for_steps_detail, fragmentRecipe)

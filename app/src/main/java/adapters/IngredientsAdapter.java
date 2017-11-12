@@ -116,9 +116,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         public void bind(int position) {
             boolean checked = checkedStatus[position];
             if (checked) {
-                mCheckBox.setChecked(true);
-            } else {
                 mCheckBox.setChecked(false);
+            } else {
+                mCheckBox.setChecked(true);
             }
         }
     }

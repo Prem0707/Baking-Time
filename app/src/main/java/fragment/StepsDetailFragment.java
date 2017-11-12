@@ -1,7 +1,6 @@
 package fragment;
 
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,16 +43,10 @@ public class StepsDetailFragment extends Fragment {
     private SimpleExoPlayer player;
     private String mStepUrl;
     private ImageView mStepThumbnail;
-    private Context context;
     private long currentPlayerPosition = 0;
 
     public StepsDetailFragment() {
         // Required empty public constructor
-    }
-
-
-    public void provideContext(Context context) {
-        this.context = context;
     }
 
     public void provideData(String videoURL, String detailedDescription, String imageThumbnail) {
@@ -83,7 +76,7 @@ public class StepsDetailFragment extends Fragment {
         if (mStepUrl != null) {
             Uri imageUrl = Uri.parse(mStepUrl);
 
-            Picasso.with(context).load(imageUrl).placeholder(R.drawable.step_thambnail).into(mStepThumbnail);
+            Picasso.with(getActivity()).load(imageUrl).placeholder(R.drawable.step_thambnail).into(mStepThumbnail);
             mStepThumbnail.setVisibility(View.VISIBLE);
         }
 
@@ -107,7 +100,7 @@ public class StepsDetailFragment extends Fragment {
                 new DefaultTrackSelector(videoTrackSelectionFactory);
 
         // 2. Create the player
-        player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
+        player = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector);
 
         // Bind the player to the view.
         mPlayerView.setPlayer(player);
@@ -115,8 +108,8 @@ public class StepsDetailFragment extends Fragment {
         // Measures bandwidth during playback. Can be null if not required.
         DefaultBandwidthMeter bandwidthMeasure = new DefaultBandwidthMeter();
         // Produces DataSource instances through which media data is loaded.
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
-                Util.getUserAgent(context, "Baking Time"), bandwidthMeasure);
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getActivity(),
+                Util.getUserAgent(getActivity(), "Baking Time"), bandwidthMeasure);
         // Produces Extractor instances for parsing the media data.
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
 

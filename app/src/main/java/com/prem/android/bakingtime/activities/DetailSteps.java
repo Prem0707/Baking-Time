@@ -22,7 +22,6 @@ public class DetailSteps extends AppCompatActivity {
 
         //Create StepsDetailFragment
         StepsDetailFragment stepsDetailFragment = new StepsDetailFragment();
-        stepsDetailFragment.provideContext(this);
 
         if (savedInstanceState == null) {
             if (getIntent().getParcelableExtra(Constants.STEP_TO_MAKE) != null) {
