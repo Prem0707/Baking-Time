@@ -19,6 +19,8 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     private int mSelectedStepPosition;
     private boolean mTwoPaneLayout;
     private String mActionBarName;
+    private StepsToMakeRecipe fragmentRecipe;
+    private StepsDetailFragment stepsDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,6 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         }
         getSupportActionBar().setTitle(mActionBarName);
 
-        StepsToMakeRecipe fragmentRecipe;
-        StepsDetailFragment stepsDetailFragment;
         // get the fragment manager to handle transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -62,6 +62,10 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         } else {
             mTwoPaneLayout = false;
 
+            if (savedInstanceState != null) {
+                fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
+                        .getFragment(savedInstanceState, "RECIPE_FRAG");
+            } else {
                 fragmentRecipe = new StepsToMakeRecipe();
                 fragmentRecipe.provideContext(this);
                 fragmentRecipe.provideRecipeDetails(mRecipe);
@@ -70,6 +74,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
                         .commit();
             }
         }
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -77,6 +82,8 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         outState.putParcelable(Constants.RECIPE_OBJECT, mRecipe);
         outState.putInt("SELECT_RECIPE_DETAIL", mSelectedStepPosition);
         outState.putString("ACTION_BAR_NAME", mActionBarName);
+        getSupportFragmentManager().putFragment(outState,
+                "RECIPE_FRAG", fragmentRecipe);
     }
 
     @Override
