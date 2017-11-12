@@ -81,7 +81,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 // handle for ingredients
                 final int mPosition = position;
                 Intent intent = new Intent(mContext, IngredientActivity.class);
-                intent.putExtra("RECIPE_INGREDIENTS", (Parcelable) mRecipeDetails.get(mPosition));
+                intent.putExtra("RECIPE_INGREDIENTS", (Parcelable) mRecipeDetails.get(mPosition).getIngredients());
                 mContext.startActivity(intent);
             }
         });
