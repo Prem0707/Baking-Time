@@ -1,6 +1,8 @@
 package adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.prem.android.bakingtime.R;
+import com.prem.android.bakingtime.activities.IngredientActivity;
 
 import java.util.ArrayList;
 
@@ -71,6 +74,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.mRecipeName.setText(recipeName);
         holder.mRecipeServing.setText("Servings:" + servings);
         holder.mRecipeImage.setImageBitmap(RecipeImageProvider.provideRecipeImage(mContext.getResources(), position));
+
+        holder.mIngredients.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // handle for ingredients
+                final int mPosition = position;
+                Intent intent = new Intent(mContext, IngredientActivity.class);
+                intent.putExtra("RECIPE_INGREDIENTS", (Parcelable) mRecipeDetails.get(mPosition));
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     /**
