@@ -28,7 +28,7 @@ public class DetailSteps extends AppCompatActivity {
             if (getIntent().getParcelableExtra(Constants.STEP_TO_MAKE) != null) {
                 mRecipeStep = getIntent().getParcelableExtra(Constants.STEP_TO_MAKE);
             } else {
-                savedInstanceState.getParcelable("STEP_DETAILS");
+                mRecipeStep = savedInstanceState.getParcelable("STEP_DETAILS");
             }
 
             if (mRecipeStep != null) {

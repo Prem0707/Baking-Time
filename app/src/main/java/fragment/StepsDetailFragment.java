@@ -40,17 +40,17 @@ public class StepsDetailFragment extends Fragment {
     private TextView mDetailedTextView;
     private String mVideoURL;
     private String mDescription;
+    private SimpleExoPlayerView mPlayerView;
+    private SimpleExoPlayer player;
+    private String mStepUrl;
+    private ImageView mStepThumbnail;
+    private Context context;
     private long currentPlayerPosition = 0;
 
     public StepsDetailFragment() {
         // Required empty public constructor
     }
 
-    private SimpleExoPlayerView mPlayerView;
-    private SimpleExoPlayer player;
-    private String mStepUrl;
-    private ImageView mStepThumbnail;
-    private Context context;
 
     public void provideContext(Context context) {
         this.context = context;
@@ -69,12 +69,15 @@ public class StepsDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
         mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.playerView);
         mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
-        mDetailedTextView.setText(mDescription);
         mStepThumbnail = (ImageView) view.findViewById(R.id.stepThumbnail);
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             currentPlayerPosition = savedInstanceState.getLong("PLAYER_POSITION");
+            mDescription = savedInstanceState.getString("STEP_DESCRIPTION");
+            mStepUrl = savedInstanceState.getString("IMAGE_URL");
+            mVideoURL = savedInstanceState.getString("VIDEO_URL");
         }
+        mDetailedTextView.setText(mDescription);
 
         //Show only if there is thumbnail URL
         if (mStepUrl != null) {
@@ -123,7 +126,8 @@ public class StepsDetailFragment extends Fragment {
         // Prepare the player with the source.
         player.prepare(videoSource);
 
-        if (currentPlayerPosition != 0) player.seekTo(currentPlayerPosition);
+        if (currentPlayerPosition != 0)
+            player.seekTo(currentPlayerPosition);
 
         //setPlayWhenReady can be used to start and pause playback
         player.setPlayWhenReady(true);
@@ -143,8 +147,16 @@ public class StepsDetailFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         if (player != null) {
             outState.putLong("PLAYER_POSITION", player.getCurrentPosition());
+            outState.putString("VIDEO_URL", mVideoURL);
+            outState.putString("STEP_DESCRIPTION", mDescription);
+            outState.putString("IMAGE_URL", mStepUrl);
         }
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
 }

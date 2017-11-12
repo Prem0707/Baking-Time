@@ -52,6 +52,7 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_steps_to_make_recipe, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.ingredient_recyclerview);
+        mRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
