@@ -58,7 +58,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         String ingredientValue = mIngredient.getIngredient();
         String measure = mIngredient.getMeasure();
         String quantity = Double.toString(mIngredient.getQuantity());
-        String textToShow = ingredientValue +" -   " + quantity + measure;
+        String textToShow = ingredientValue + " -   " + quantity + measure;
 
         holder.mIngName.setText(textToShow);
     }
@@ -70,9 +70,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
      */
     @Override
     public int getItemCount() {
-        if(mIngredientsData != null){
+        if (mIngredientsData != null) {
             return mIngredientsData.size();
-        }else{
+        } else {
             return 0;
         }
     }
