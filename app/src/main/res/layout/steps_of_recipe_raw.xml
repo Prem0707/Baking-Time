@@ -9,14 +9,14 @@
         android:id="@+id/steps_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp"
+        android:layout_margin="2dp"
         card_view:cardCornerRadius="2dp"
         card_view:cardElevation="1dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp">
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/step_index"
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
-                android:inputType="textMultiLine"
+                android:singleLine="true"
                 android:layout_toEndOf="@+id/step_index"
                 android:textColor="#000"
                 android:textSize="18sp"/>
