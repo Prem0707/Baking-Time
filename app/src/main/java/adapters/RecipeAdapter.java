@@ -2,7 +2,6 @@ package adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -79,9 +78,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             @Override
             public void onClick(View v) {
                 // handle for ingredients
-                final int mPosition = position;
                 Intent intent = new Intent(mContext, IngredientActivity.class);
-                intent.putExtra("RECIPE_INGREDIENTS", (Parcelable) mRecipeDetails.get(mPosition).getIngredients());
+                intent.putParcelableArrayListExtra("RECIPE_INGREDIENTS", mRecipeDetails.get(position).getIngredients());
                 mContext.startActivity(intent);
             }
         });

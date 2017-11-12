@@ -15,23 +15,24 @@ import models.Ingredient;
 public class IngredientActivity extends AppCompatActivity {
 
     private ArrayList<Ingredient> mIngredients;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLinearLayoutManager;
-    private IngredientsAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredient);
 
-        if(getIntent().getParcelableExtra("RECIPE_INGREDIENTS") != null){
-            mIngredients = getIntent().getParcelableExtra("RECIPE_INGREDIENTS");
+        if(getIntent().getParcelableArrayListExtra("RECIPE_INGREDIENTS") != null){
+            mIngredients = getIntent().getParcelableArrayListExtra("RECIPE_INGREDIENTS");
         }
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recipe_recyclerview);
-        mRecyclerView.setHasFixedSize(true);
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new IngredientsAdapter(this);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.ingredients_recyclerView);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        IngredientsAdapter mAdapter = new IngredientsAdapter(this);
+        mAdapter.setIngredientsData(mIngredients);
+
+        mRecyclerView.setAdapter(mAdapter);
 
     }
 }
