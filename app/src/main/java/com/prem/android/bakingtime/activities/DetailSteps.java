@@ -14,6 +14,7 @@ public class DetailSteps extends AppCompatActivity {
 
     private Step mRecipeStep;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

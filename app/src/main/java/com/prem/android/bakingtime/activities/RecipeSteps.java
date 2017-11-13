@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.prem.android.bakingtime.R;
 
 import adapters.RecipeStepsAdapter;
-import fragment.StepsVideoFragment;
 import fragment.StepsToMakeRecipe;
+import fragment.StepsVideoFragment;
 import models.Recipe;
 import models.Step;
 import utils.Constants;
@@ -45,7 +45,6 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
 
             //In two pane mode, add initial fragments
             fragmentRecipe = new StepsToMakeRecipe();
-            fragmentRecipe.provideRecipeDetails(mRecipe);
             fragmentManager.beginTransaction()
                     .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
                     .commit();
@@ -64,7 +63,9 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
                         .getFragment(savedInstanceState, "RECIPE_FRAG");
             } else {
                 fragmentRecipe = new StepsToMakeRecipe();
-                fragmentRecipe.provideRecipeDetails(mRecipe);
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE",  mRecipe.getSteps());
+                fragmentRecipe.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
                         .commit();

@@ -18,7 +18,6 @@ import com.prem.android.bakingtime.activities.DetailSteps;
 import java.util.ArrayList;
 
 import adapters.RecipeStepsAdapter;
-import models.Recipe;
 import models.Step;
 import utils.Constants;
 
@@ -35,13 +34,15 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
         // Required empty public constructor
     }
 
-    public void provideRecipeDetails(Recipe recipeDetails) {
-        this.mSteps = recipeDetails.getSteps();
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        if (getArguments() != null) {
+            mSteps = getArguments().getParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE");
+        } else {
+            mSteps = savedInstanceState.getParcelableArrayList("STEPS_ARRAY");
+        }
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_steps_to_make_recipe, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.ingredient_recyclerview);
@@ -64,15 +65,12 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState == null) {
-            mRecipeStepsAdapter.setDataset(mSteps);
-        } else {
-            mSteps = savedInstanceState.getParcelableArrayList("STEPS_ARRAY");
-            mRecipeStepsAdapter.setDataset(mSteps);
+
+        mRecipeStepsAdapter.setDataset(mSteps);
+        if (savedInstanceState != null) {
             Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable("STEPS_RECYCLER_LAYOUT");
             mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         }
-        mRecipeStepsAdapter.provideContext(getContext());
         mRecyclerView.setAdapter(mRecipeStepsAdapter);
     }
 
