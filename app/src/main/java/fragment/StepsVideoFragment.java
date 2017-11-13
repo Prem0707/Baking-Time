@@ -4,12 +4,14 @@ package fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -30,34 +32,30 @@ import com.google.android.exoplayer2.util.Util;
 import com.prem.android.bakingtime.R;
 import com.squareup.picasso.Picasso;
 
+import models.Step;
+
 /**
  * This fragment will contain the videos of steps along with detailed Step of recipe preparation .
  */
-public class StepsDetailFragment extends Fragment {
+public class StepsVideoFragment extends Fragment {
 
 
     private TextView mDetailedTextView;
-    private String mVideoURL;
-    private String mDescription;
+
     private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer player;
-    private String mStepUrl;
+
     private ImageView mStepThumbnail;
     private long currentPlayerPosition = 0;
+    private Step recipeSteps;
 
-    public StepsDetailFragment() {
+    public StepsVideoFragment() {
         // Required empty public constructor
     }
 
-    public void provideData(String videoURL, String detailedDescription, String imageThumbnail) {
-        this.mVideoURL = videoURL;
-        this.mDescription = detailedDescription;
-        this.mStepUrl = imageThumbnail;
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
         mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.playerView);
@@ -66,28 +64,34 @@ public class StepsDetailFragment extends Fragment {
 
         if (savedInstanceState != null) {
             currentPlayerPosition = savedInstanceState.getLong("PLAYER_POSITION");
-            mDescription = savedInstanceState.getString("STEP_DESCRIPTION");
-            mStepUrl = savedInstanceState.getString("IMAGE_URL");
-            mVideoURL = savedInstanceState.getString("VIDEO_URL");
-        }
-        mDetailedTextView.setText(mDescription);
-
-        //Show only if there is thumbnail URL
-        if (mStepUrl != null) {
-            Uri imageUrl = Uri.parse(mStepUrl);
-
-            Picasso.with(getActivity()).load(imageUrl).placeholder(R.drawable.step_thambnail).into(mStepThumbnail);
-            mStepThumbnail.setVisibility(View.VISIBLE);
+            recipeSteps = savedInstanceState.getParcelable("RECIP_STEPS");
+        } else {
+            if (getArguments() != null) {
+                recipeSteps = getArguments().getParcelable("DATA_SENT_TO_VIDEO_FRAG");
+            }
         }
 
-        if (!mVideoURL.isEmpty()) {
-            setupExoPlayer();
+        mDetailedTextView.setText(recipeSteps.getDescription());
+
+        Uri imageUrl = Uri.parse(recipeSteps.getThumbnailURL());
+        if (imageUrl != null) {
+            Picasso.with(getActivity()).load(imageUrl)
+                    .placeholder(R.drawable.step_thambnail)
+                    .into(mStepThumbnail);
         }
+
+        String mVieoURL = recipeSteps.getVideoURL();
+        if (mVieoURL != null) {
+            setupExoPlayer(mVieoURL);
+        } else {
+            Toast.makeText(getActivity(), "Video URL is empty", Toast.LENGTH_LONG).show();
+        }
+
         return view;
     }
 
 
-    private void setupExoPlayer() {
+    private void setupExoPlayer(String mVideoURL) {
 
         // 1. Create a default TrackSelector
         Handler mainHandler = new Handler();
@@ -108,7 +112,7 @@ public class StepsDetailFragment extends Fragment {
         // Measures bandwidth during playback. Can be null if not required.
         DefaultBandwidthMeter bandwidthMeasure = new DefaultBandwidthMeter();
         // Produces DataSource instances through which media data is loaded.
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getActivity(),
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(),
                 Util.getUserAgent(getActivity(), "Baking Time"), bandwidthMeasure);
         // Produces Extractor instances for parsing the media data.
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
@@ -140,9 +144,8 @@ public class StepsDetailFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         if (player != null) {
             outState.putLong("PLAYER_POSITION", player.getCurrentPosition());
-            outState.putString("VIDEO_URL", mVideoURL);
-            outState.putString("STEP_DESCRIPTION", mDescription);
-            outState.putString("IMAGE_URL", mStepUrl);
+            outState.putParcelable("RECIP_STEPS", (Parcelable) recipeSteps);
+
         }
         super.onSaveInstanceState(outState);
     }

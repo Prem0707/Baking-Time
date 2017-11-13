@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.prem.android.bakingtime.R;
 
 import adapters.RecipeStepsAdapter;
-import fragment.StepsDetailFragment;
+import fragment.StepsVideoFragment;
 import fragment.StepsToMakeRecipe;
 import models.Recipe;
 import models.Step;
@@ -20,7 +20,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     private boolean mTwoPaneLayout;
     private String mActionBarName;
     private StepsToMakeRecipe fragmentRecipe;
-    private StepsDetailFragment stepsDetailFragment;
+    private StepsVideoFragment stepsDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +50,8 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
                     .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
                     .commit();
 
-            stepsDetailFragment = new StepsDetailFragment();
+            stepsDetailFragment = new StepsVideoFragment();
             Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
-            stepsDetailFragment.provideData(mStep.getVideoURL(), mStep.getDescription(), mStep.getThumbnailURL());
             fragmentManager.beginTransaction()
                     .add(R.id.view_holder_for_videos_steps, stepsDetailFragment)
                     .commit();

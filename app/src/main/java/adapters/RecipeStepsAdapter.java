@@ -62,7 +62,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
         Step mStep = mStepsArrayList.get(position);
         String shortDescription = mStep.getShortDescription();
-        String stepIndex = String.valueOf(mStep.getId()+1) +".";
+        String stepIndex = String.valueOf(mStep.getId()) +".";
 
         holder.recipeIndex.setText(stepIndex);
         holder.recipeStep.setText(shortDescription);
