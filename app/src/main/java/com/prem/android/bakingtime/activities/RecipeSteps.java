@@ -9,11 +9,12 @@ import com.prem.android.bakingtime.R;
 import adapters.RecipeStepsAdapter;
 import fragment.StepsToMakeRecipe;
 import fragment.StepsVideoFragment;
+import interfaces.Communicator;
 import models.Recipe;
 import models.Step;
 import utils.Constants;
 
-public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter.RecViewListener {
+public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter.RecViewListener, Communicator {
 
     private Recipe mRecipe;
     private int mSelectedStepPosition;
@@ -86,5 +87,10 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
         mSelectedStepPosition = positionOfSelectedStep;
+    }
+
+    @Override
+    public void respond() {
+
     }
 }
