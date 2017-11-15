@@ -15,12 +15,13 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <View style="@style/Divider" />
+    <View style="@style/Divider"
+        android:layout_weight="0.1"/>
 
     <FrameLayout
         android:id="@+id/view_holder_for_videos_steps"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2" />
+        android:layout_weight="1.9" />
 
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.prem.android.bakingtime.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.prem.android.bakingtime.R;
 
@@ -30,7 +31,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         if (savedInstanceState == null) {
             if (getIntent().getParcelableExtra(Constants.SELECTED_RECIPE) != null)
                 mRecipe = getIntent().getParcelableExtra(Constants.SELECTED_RECIPE);
-                mActionBarName = mRecipe.getName();
+            mActionBarName = mRecipe.getName();
         } else {
             mRecipe = savedInstanceState.getParcelable(Constants.RECIPE_OBJECT);
             mActionBarName = savedInstanceState.getString("ACTION_BAR_NAME");
@@ -40,53 +41,38 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         // get the fragment manager to handle transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             fragmentRecipe = new StepsToMakeRecipe();
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE",  mRecipe.getSteps());
+            bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE", mRecipe.getSteps());
             fragmentRecipe.setArguments(bundle);
             fragmentManager.beginTransaction()
                     .replace(R.id.view_holder_for_steps_detail, fragmentRecipe)
                     .commit();
-        }else{
+        } else {
             fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
                     .getFragment(savedInstanceState, "RECIPE_FRAG");
         }
 
-        if(BasicUtility.tabletMode()){
-            if(savedInstanceState == null) {
+        if (BasicUtility.tabletMode()) {
+            if (savedInstanceState == null) {
                 //In two pane mode, add detail fragment fragments
                 stepsDetailFragment = new StepsVideoFragment();
+                Toast.makeText(this, "Created new Video fragment", Toast.LENGTH_LONG).show();
                 Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG",mStep);
+                bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", mStep);
                 stepsDetailFragment.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
                         .commit();
-            }else{
+            } else {
                 stepsDetailFragment = (StepsVideoFragment) getSupportFragmentManager()
                         .getFragment(savedInstanceState, "VIDEO_FRAG");
             }
         }
-
-//        } else {
-//            mTwoPaneLayout = false;
-//
-//            if (savedInstanceState != null) {
-//                fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
-//                        .getFragment(savedInstanceState, "RECIPE_FRAG");
-//            } else {
-//                fragmentRecipe = new StepsToMakeRecipe();
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE",  mRecipe.getSteps());
-//                fragmentRecipe.setArguments(bundle);
-//                fragmentManager.beginTransaction()
-//                        .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
-//                        .commit();
-//            }
-//        }
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -96,7 +82,8 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         outState.putString("ACTION_BAR_NAME", mActionBarName);
         getSupportFragmentManager().putFragment(outState,
                 "RECIPE_FRAG", fragmentRecipe);
-        if(BasicUtility.tabletMode()){
+        if(BasicUtility.tabletMode() && stepsDetailFragment != null){
+            Toast.makeText(this, "Saved Video fragment", Toast.LENGTH_LONG).show();
             getSupportFragmentManager().putFragment(outState,
                     "VIDEO_FRAG", stepsDetailFragment);
         }
