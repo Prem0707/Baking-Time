@@ -9,12 +9,11 @@ import com.prem.android.bakingtime.R;
 import adapters.RecipeStepsAdapter;
 import fragment.StepsToMakeRecipe;
 import fragment.StepsVideoFragment;
-import interfaces.Communicator;
 import models.Recipe;
 import models.Step;
 import utils.Constants;
 
-public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter.RecViewListener, Communicator {
+public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter.RecViewListener {
 
     private Recipe mRecipe;
     private int mSelectedStepPosition;
@@ -41,37 +40,46 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         // get the fragment manager to handle transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (findViewById(R.id.select_recipe_two_pane_layout) != null) {
-            mTwoPaneLayout = true;
-
-            //In two pane mode, add initial fragments
+        if(savedInstanceState == null){
             fragmentRecipe = new StepsToMakeRecipe();
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE",  mRecipe.getSteps());
+            fragmentRecipe.setArguments(bundle);
             fragmentManager.beginTransaction()
                     .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
                     .commit();
+        }else{
+            fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
+                    .getFragment(savedInstanceState, "RECIPE_FRAG");
+        }
 
+        if (findViewById(R.id.select_recipe_two_pane_layout) != null) {
+            mTwoPaneLayout = true;
+
+            //In two pane mode, add detail fragment fragments
             stepsDetailFragment = new StepsVideoFragment();
             Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
             fragmentManager.beginTransaction()
                     .add(R.id.view_holder_for_videos_steps, stepsDetailFragment)
                     .commit();
-
-        } else {
-            mTwoPaneLayout = false;
-
-            if (savedInstanceState != null) {
-                fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
-                        .getFragment(savedInstanceState, "RECIPE_FRAG");
-            } else {
-                fragmentRecipe = new StepsToMakeRecipe();
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE",  mRecipe.getSteps());
-                fragmentRecipe.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
-                        .commit();
-            }
         }
+
+//        } else {
+//            mTwoPaneLayout = false;
+//
+//            if (savedInstanceState != null) {
+//                fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
+//                        .getFragment(savedInstanceState, "RECIPE_FRAG");
+//            } else {
+//                fragmentRecipe = new StepsToMakeRecipe();
+//                Bundle bundle = new Bundle();
+//                bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE",  mRecipe.getSteps());
+//                fragmentRecipe.setArguments(bundle);
+//                fragmentManager.beginTransaction()
+//                        .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
+//                        .commit();
+//            }
+//        }
     }
 
     @Override
@@ -87,10 +95,5 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
         mSelectedStepPosition = positionOfSelectedStep;
-    }
-
-    @Override
-    public void respond() {
-
     }
 }

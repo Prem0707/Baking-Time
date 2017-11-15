@@ -18,7 +18,6 @@ import com.prem.android.bakingtime.activities.DetailSteps;
 import java.util.ArrayList;
 
 import adapters.RecipeStepsAdapter;
-import interfaces.Communicator;
 import models.Step;
 import utils.Constants;
 
@@ -30,7 +29,6 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
     private ArrayList<Step> mSteps;
     private RecyclerView mRecyclerView;
     private RecipeStepsAdapter mRecipeStepsAdapter;
-    Communicator mClickListener;
 
     public StepsToMakeRecipe() {
         // Required empty public constructor
@@ -67,7 +65,6 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mClickListener = (Communicator) getActivity();
 
         mRecipeStepsAdapter.setDataset(mSteps);
         if (savedInstanceState != null) {
@@ -88,7 +85,6 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
 
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
-        mClickListener.respond();
         Intent toIngredientAndSteps = new Intent(getActivity(), DetailSteps.class);
         toIngredientAndSteps.putExtra(Constants.STEP_TO_MAKE, (Parcelable) mSteps.get(positionOfSelectedStep));
         startActivity(toIngredientAndSteps);
