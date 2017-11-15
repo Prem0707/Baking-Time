@@ -71,6 +71,7 @@ public class StepsVideoFragment extends Fragment {
             }
         }
 
+        if(recipeSteps != null)
         mDetailedTextView.setText(recipeSteps.getDescription());
 
         Uri imageUrl = Uri.parse(recipeSteps.getThumbnailURL());

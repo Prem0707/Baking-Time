@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.prem.android.bakingtime.R;
 
 import adapters.RecipeStepsAdapter;
+import extras.BasicUtility;
 import fragment.StepsToMakeRecipe;
 import fragment.StepsVideoFragment;
 import models.Recipe;
@@ -17,7 +18,6 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
 
     private Recipe mRecipe;
     private int mSelectedStepPosition;
-    private boolean mTwoPaneLayout;
     private String mActionBarName;
     private StepsToMakeRecipe fragmentRecipe;
     private StepsVideoFragment stepsDetailFragment;
@@ -46,22 +46,28 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
             bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE",  mRecipe.getSteps());
             fragmentRecipe.setArguments(bundle);
             fragmentManager.beginTransaction()
-                    .add(R.id.view_holder_for_steps_detail, fragmentRecipe)
+                    .replace(R.id.view_holder_for_steps_detail, fragmentRecipe)
                     .commit();
         }else{
             fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
                     .getFragment(savedInstanceState, "RECIPE_FRAG");
         }
 
-        if (findViewById(R.id.select_recipe_two_pane_layout) != null) {
-            mTwoPaneLayout = true;
-
-            //In two pane mode, add detail fragment fragments
-            stepsDetailFragment = new StepsVideoFragment();
-            Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
-            fragmentManager.beginTransaction()
-                    .add(R.id.view_holder_for_videos_steps, stepsDetailFragment)
-                    .commit();
+        if(BasicUtility.tabletMode()){
+            if(savedInstanceState == null) {
+                //In two pane mode, add detail fragment fragments
+                stepsDetailFragment = new StepsVideoFragment();
+                Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG",mStep);
+                stepsDetailFragment.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
+                        .commit();
+            }else{
+                stepsDetailFragment = (StepsVideoFragment) getSupportFragmentManager()
+                        .getFragment(savedInstanceState, "VIDEO_FRAG");
+            }
         }
 
 //        } else {
@@ -90,6 +96,10 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         outState.putString("ACTION_BAR_NAME", mActionBarName);
         getSupportFragmentManager().putFragment(outState,
                 "RECIPE_FRAG", fragmentRecipe);
+        if(BasicUtility.tabletMode()){
+            getSupportFragmentManager().putFragment(outState,
+                    "VIDEO_FRAG", stepsDetailFragment);
+        }
     }
 
     @Override

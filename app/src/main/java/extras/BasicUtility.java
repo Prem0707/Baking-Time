@@ -2,6 +2,7 @@ package extras;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.v7.widget.GridLayoutManager;
 
 /**
@@ -11,6 +12,13 @@ import android.support.v7.widget.GridLayoutManager;
 
 
 public class BasicUtility {
+
+    //Checking the either app is running on tablet or not
+    public static boolean tabletMode() {
+        Configuration resources = Resources.getSystem().getConfiguration();
+        return (resources.smallestScreenWidthDp >= 600
+                && resources.orientation == Configuration.ORIENTATION_LANDSCAPE);
+    }
 
     public static GridLayoutManager gridLayoutManagerAccordingToOrientation(Context mContext) {
         int deviceOrientation = checkDeviceOrientation(mContext);
