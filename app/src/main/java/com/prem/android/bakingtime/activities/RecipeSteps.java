@@ -41,10 +41,11 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         // get the fragment manager to handle transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null || fragmentManager == null) {
             fragmentRecipe = new StepsToMakeRecipe();
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE", mRecipe.getSteps());
+            Toast.makeText(this, "Created Recipe fragment", Toast.LENGTH_LONG).show();
             fragmentRecipe.setArguments(bundle);
             fragmentManager.beginTransaction()
                     .replace(R.id.view_holder_for_steps_detail, fragmentRecipe)
@@ -52,10 +53,12 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         } else {
             fragmentRecipe = (StepsToMakeRecipe) getSupportFragmentManager()
                     .getFragment(savedInstanceState, "RECIPE_FRAG");
+            Toast.makeText(this, " fragment", Toast.LENGTH_LONG).show();
         }
 
+
         if (BasicUtility.tabletMode()) {
-            if (savedInstanceState == null) {
+            if (savedInstanceState == null || stepsDetailFragment == null) {
                 //In two pane mode, add detail fragment fragments
                 stepsDetailFragment = new StepsVideoFragment();
                 Toast.makeText(this, "Created new Video fragment", Toast.LENGTH_LONG).show();
@@ -67,6 +70,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
                         .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
                         .commit();
             } else {
+                Toast.makeText(this, "Using already Saved Video fragment", Toast.LENGTH_LONG).show();
                 stepsDetailFragment = (StepsVideoFragment) getSupportFragmentManager()
                         .getFragment(savedInstanceState, "VIDEO_FRAG");
             }
