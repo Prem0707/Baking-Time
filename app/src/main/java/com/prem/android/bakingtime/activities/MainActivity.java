@@ -60,13 +60,12 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
     @Override
     protected void onStart() {
         super.onStart();
-        spinner.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(Constants.RECIPE_LIST, recipeList);
-        //save the current recyclerview position
+        //save the current recyclerView position
         outState.putParcelable("BUNDLE_RECYCLER_LAYOUT", mRecyclerView.getLayoutManager().onSaveInstanceState());
         super.onSaveInstanceState(outState);
     }
@@ -76,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
         this.recipeList = mRecipe;
         // now recipeList has data
         adapter.setDataset(recipeList);
+        spinner.setVisibility(View.INVISIBLE);
     }
 
     @Override

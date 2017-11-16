@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +29,6 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.prem.android.bakingtime.R;
-import com.squareup.picasso.Picasso;
 
 import models.Step;
 
@@ -44,8 +42,6 @@ public class StepsVideoFragment extends Fragment {
 
     private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer player;
-
-    private ImageView mStepThumbnail;
     private long currentPlayerPosition = 0;
     private Step recipeSteps;
 
@@ -60,7 +56,6 @@ public class StepsVideoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
         mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.playerView);
         mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
-        mStepThumbnail = (ImageView) view.findViewById(R.id.stepThumbnail);
 
         if (savedInstanceState != null) {
             currentPlayerPosition = savedInstanceState.getLong("PLAYER_POSITION");
@@ -73,13 +68,6 @@ public class StepsVideoFragment extends Fragment {
 
         if(recipeSteps != null)
         mDetailedTextView.setText(recipeSteps.getDescription());
-
-        Uri imageUrl = Uri.parse(recipeSteps.getThumbnailURL());
-        if (imageUrl != null) {
-            Picasso.with(getActivity()).load(imageUrl)
-                    .placeholder(R.drawable.step_thambnail)
-                    .into(mStepThumbnail);
-        }
 
         String mVieoURL = recipeSteps.getVideoURL();
         if (mVieoURL != null) {
@@ -146,7 +134,6 @@ public class StepsVideoFragment extends Fragment {
         if (player != null) {
             outState.putLong("PLAYER_POSITION", player.getCurrentPosition());
             outState.putParcelable("RECIP_STEPS", (Parcelable) recipeSteps);
-
         }
         super.onSaveInstanceState(outState);
     }
