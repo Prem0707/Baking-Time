@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
         spinner = (ProgressBar) findViewById(R.id.progress_bar);
         spinner.setVisibility(View.VISIBLE);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recipe_recyclerview);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recipe_recyclerView);
         mRecyclerView.setHasFixedSize(true);
         GridLayoutManager mGridLayoutManager = BasicUtility.gridLayoutManagerAccordingToOrientation(this);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
