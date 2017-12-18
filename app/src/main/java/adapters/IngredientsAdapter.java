@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.prem.android.bakingtime.R;
@@ -66,20 +64,20 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         holder.mIngName.setText(textToShow);
 
         //holder.bind should not trigger onCheckedChanged, it should just update UI
-        holder.mCheckBox.setOnCheckedChangeListener(null);
+       // holder.mCheckBox.setOnCheckedChangeListener(null);
 
-        holder.bind(position);
+        //holder.bind(position);
 
-        holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    checkedStatus[holder.getAdapterPosition()] = true;
-                } else {
-                    checkedStatus[holder.getAdapterPosition()] = false;
-                }
-            }
-        });
+//        holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    checkedStatus[holder.getAdapterPosition()] = true;
+//                } else {
+//                    checkedStatus[holder.getAdapterPosition()] = false;
+//                }
+//            }
+//        });
     }
 
     /**
@@ -103,24 +101,24 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     class RecipeIngredientsHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView mIngName;
-        CheckBox mCheckBox;
+        //CheckBox mCheckBox;
 
         private RecipeIngredientsHolder(View itemView) {
             super(itemView);
 
             mIngName = itemView.findViewById(R.id.ingredients_name);
             cardView = itemView.findViewById(R.id.ingredient_cardView);
-            mCheckBox = itemView.findViewById(R.id.checkBox);
+           // mCheckBox = itemView.findViewById(R.id.checkBox);
         }
 
-        public void bind(int position) {
-            boolean checked = checkedStatus[position];
-            if (checked) {
-                mCheckBox.setChecked(false);
-            } else {
-                mCheckBox.setChecked(true);
-            }
-        }
+//        public void bind(int position) {
+//            boolean checked = checkedStatus[position];
+//            if (checked) {
+//                mCheckBox.setChecked(false);
+//            } else {
+//                mCheckBox.setChecked(true);
+//            }
+//        }
     }
 
     public void setIngredientsData(ArrayList<Ingredient> dataset) {

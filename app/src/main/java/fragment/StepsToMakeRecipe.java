@@ -18,6 +18,7 @@ import com.prem.android.bakingtime.activities.DetailSteps;
 import java.util.ArrayList;
 
 import adapters.RecipeStepsAdapter;
+import extras.BasicUtility;
 import models.Step;
 import utils.Constants;
 
@@ -29,9 +30,16 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
     private ArrayList<Step> mSteps;
     private RecyclerView mRecyclerView;
     private RecipeStepsAdapter mRecipeStepsAdapter;
+    OnHeadlineSelectedListener mCallback;
+    private Step stepsOfMaking;
 
     public StepsToMakeRecipe() {
         // Required empty public constructor
+    }
+
+    // Container Activity must implement this interface
+    public interface OnHeadlineSelectedListener {
+        public void onArticleSelected(Step stepsOfRecipe);
     }
 
 
@@ -85,8 +93,18 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
 
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
-        Intent toIngredientAndSteps = new Intent(getActivity(), DetailSteps.class);
-        toIngredientAndSteps.putExtra(Constants.STEP_TO_MAKE, (Parcelable) mSteps.get(positionOfSelectedStep));
-        startActivity(toIngredientAndSteps);
+        stepsOfMaking = mSteps.get(positionOfSelectedStep);
+        if(!BasicUtility.tabletMode()) {
+            Intent toIngredientAndSteps = new Intent(getActivity(), DetailSteps.class);
+            toIngredientAndSteps.putExtra(Constants.STEP_TO_MAKE, (Parcelable) stepsOfMaking);
+            startActivity(toIngredientAndSteps);
+        }else{
+            try {
+                mCallback = (OnHeadlineSelectedListener) getActivity();
+            } catch (ClassCastException e) {
+                throw new ClassCastException(getActivity().toString()
+                        + " must implement OnHeadlineSelectedListener");
+            }
+        }
     }
 }

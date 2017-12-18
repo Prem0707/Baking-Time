@@ -15,13 +15,15 @@ import models.Recipe;
 import models.Step;
 import utils.Constants;
 
-public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter.RecViewListener {
+public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter.RecViewListener,
+        StepsToMakeRecipe.OnHeadlineSelectedListener {
 
     private Recipe mRecipe;
     private int mSelectedStepPosition;
     private String mActionBarName;
     private StepsToMakeRecipe fragmentRecipe;
     private StepsVideoFragment stepsDetailFragment;
+    Bundle bundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,6 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
 
         if (savedInstanceState == null || fragmentManager == null) {
             fragmentRecipe = new StepsToMakeRecipe();
-            Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE", mRecipe.getSteps());
             Toast.makeText(this, "Created Recipe fragment", Toast.LENGTH_LONG).show();
             fragmentRecipe.setArguments(bundle);
@@ -63,7 +64,6 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
                 stepsDetailFragment = new StepsVideoFragment();
                 Toast.makeText(this, "Created new Video fragment", Toast.LENGTH_LONG).show();
                 Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
-                Bundle bundle = new Bundle();
                 bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", mStep);
                 stepsDetailFragment.setArguments(bundle);
                 fragmentManager.beginTransaction()
@@ -96,5 +96,11 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
         mSelectedStepPosition = positionOfSelectedStep;
+    }
+
+    @Override
+    public void onArticleSelected(Step stepsOfRecipe) {
+        bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", stepsOfRecipe);
+        stepsDetailFragment.setArguments(bundle);
     }
 }
