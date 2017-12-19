@@ -1,22 +1,36 @@
 package widget;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Created by Prem on 19-12-2017.
+ * WidgetDataProvider acts as the adapter for the collection view widget,
+ * providing RemoteViews to the widget in the getViewAt method.
  */
 
 public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory{
 
+    private static final String TAG = "WidgetDataProvider";
+    List<String> mCollection = new ArrayList<>();
+    Context mContext = null;
+
+    public WidgetDataProvider(Context mContext, Intent intent) {
+        this.mContext = mContext;
+    }
+
     @Override
     public void onCreate() {
-
+        initData();
     }
 
     @Override
     public void onDataSetChanged() {
-
+        initData();
     }
 
     @Override
@@ -26,12 +40,14 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public int getCount() {
-        return 0;
+        return mCollection.size();
     }
 
     @Override
     public RemoteViews getViewAt(int i) {
-        return null;
+        RemoteViews remoteviews = new RemoteViews(mContext.getPackageName(), android.R.layout.simple_list_item_1);
+        remoteviews.setTextViewText(android.R.id.text1, mCollection.get(i));
+        return  remoteviews;
     }
 
     @Override
@@ -41,16 +57,23 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override
-    public long getItemId(int i) {
-        return 0;
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
+    }
+
+    private void initData(){
+        mCollection.clear();
+        for(int t=0; t<10; t++){
+            mCollection.add("ListView Item" + t);
+        }
     }
 }

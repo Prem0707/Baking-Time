@@ -51,7 +51,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
      *                 item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
-    boolean[] checkedStatus = new boolean[15];
+
     @Override
     public void onBindViewHolder(final RecipeIngredientsHolder holder, int position) {
 
@@ -63,21 +63,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         holder.mIngName.setText(textToShow);
 
-        //holder.bind should not trigger onCheckedChanged, it should just update UI
-       // holder.mCheckBox.setOnCheckedChangeListener(null);
-
-        //holder.bind(position);
-
-//        holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    checkedStatus[holder.getAdapterPosition()] = true;
-//                } else {
-//                    checkedStatus[holder.getAdapterPosition()] = false;
-//                }
-//            }
-//        });
     }
 
     /**
@@ -101,24 +86,13 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     class RecipeIngredientsHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView mIngName;
-        //CheckBox mCheckBox;
 
         private RecipeIngredientsHolder(View itemView) {
             super(itemView);
 
             mIngName = itemView.findViewById(R.id.ingredients_name);
             cardView = itemView.findViewById(R.id.ingredient_cardView);
-           // mCheckBox = itemView.findViewById(R.id.checkBox);
         }
-
-//        public void bind(int position) {
-//            boolean checked = checkedStatus[position];
-//            if (checked) {
-//                mCheckBox.setChecked(false);
-//            } else {
-//                mCheckBox.setChecked(true);
-//            }
-//        }
     }
 
     public void setIngredientsData(ArrayList<Ingredient> dataset) {
