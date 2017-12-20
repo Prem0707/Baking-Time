@@ -12,6 +12,7 @@ import com.prem.android.bakingtime.R;
 
 import java.util.ArrayList;
 
+import extras.BasicUtility;
 import models.Ingredient;
 
 /**
@@ -56,12 +57,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     public void onBindViewHolder(final RecipeIngredientsHolder holder, int position) {
 
         Ingredient mIngredient = mIngredientsData.get(position);
-        String ingredientValue = mIngredient.getIngredient();
-        String measure = mIngredient.getMeasure();
-        String quantity = Double.toString(mIngredient.getQuantity());
-        String textToShow = ingredientValue + " -   " + quantity + measure;
-
-        holder.mIngName.setText(textToShow);
+        holder.mIngName.setText(BasicUtility.DataToShow(mIngredient));
 
     }
 

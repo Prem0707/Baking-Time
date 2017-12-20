@@ -2,8 +2,10 @@ package com.prem.android.bakingtime.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,11 +21,14 @@ import adapters.RecipeAdapter;
 import extras.BasicUtility;
 import interfaces.TaskCompleted;
 import models.Recipe;
+import sharedpreference.UserPreference;
 import utils.AsyncTaskRecipe;
 import utils.Constants;
 import utils.NetworkUtils;
+import widget.WidgetDataProvider;
 
-public class MainActivity extends AppCompatActivity implements TaskCompleted, RecipeAdapter.RecyclerViewClickListener {
+public class MainActivity extends AppCompatActivity implements TaskCompleted,
+        RecipeAdapter.RecyclerViewClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private RecipeAdapter adapter;
     private ProgressBar spinner;
@@ -58,9 +63,12 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -80,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
 
     @Override
     public void onRecipeClick(int positionOfSelectedRecipe) {
+        UserPreference.setSharedPref(positionOfSelectedRecipe, this);
         Intent recipeSteps = new Intent(this, RecipeSteps.class);
         recipeSteps.putExtra(Constants.SELECTED_RECIPE, (Parcelable) recipeList.get(positionOfSelectedRecipe));
         startActivity(recipeSteps);
@@ -93,5 +102,20 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted, Re
         } else {
             Toast.makeText(this, "Check Your Network Connection", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //Cleanup the shared preference listener
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+           int positionOdRecipe = UserPreference.getSharedPref(this);
+           Recipe mRecipe = recipeList.get(positionOdRecipe);
+           new WidgetDataProvider(mRecipe);
     }
 }

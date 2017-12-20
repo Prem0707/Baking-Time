@@ -4,9 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+import android.widget.Toast;
+
+import com.prem.android.bakingtime.R;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import models.Ingredient;
+import models.Recipe;
 
 /**
  * WidgetDataProvider acts as the adapter for the collection view widget,
@@ -16,8 +21,17 @@ import java.util.List;
 public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory{
 
     private static final String TAG = "WidgetDataProvider";
-    List<String> mCollection = new ArrayList<>();
-    Context mContext = null;
+    private Recipe mRecipe;
+    private String recipeName;
+    private ArrayList<Ingredient> mCollection;
+    //private List<Ingredient> mCollection = mRecipe != null ? mRecipe.getIngredients() : null;
+    private Context mContext = null;
+
+
+
+    public WidgetDataProvider(Recipe recipe) {
+        this.mRecipe = recipe;
+    }
 
     public WidgetDataProvider(Context mContext, Intent intent) {
         this.mContext = mContext;
@@ -45,9 +59,12 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public RemoteViews getViewAt(int i) {
-        RemoteViews remoteviews = new RemoteViews(mContext.getPackageName(), android.R.layout.simple_list_item_1);
-        remoteviews.setTextViewText(android.R.id.text1, mCollection.get(i));
-        return  remoteviews;
+          RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.ingredient_list_widget);
+        //RemoteViews remoteviews = new RemoteViews(mContext.getPackageName(), android.R.layout.simple_list_item_1);
+       // remoteviews.setTextViewText(android.R.id.text1, mCollection.get(i));
+          remoteViews.setTextViewText(R.id.widget_title, recipeName);
+          remoteViews.setTextViewText(android.R.id.text1, (CharSequence) mCollection.get(i));
+        return  remoteViews;
     }
 
     @Override
@@ -71,9 +88,9 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     }
 
     private void initData(){
-        mCollection.clear();
-        for(int t=0; t<10; t++){
-            mCollection.add("ListView Item" + t);
-        }
+        //mCollection.clear();
+        this.recipeName = mRecipe.getName();
+        Toast.makeText(mContext,"Name of Recipe is:" + recipeName, Toast.LENGTH_LONG).show();
+        this.mCollection = mRecipe.getIngredients();
     }
 }

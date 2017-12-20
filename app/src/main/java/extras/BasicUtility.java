@@ -5,6 +5,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v7.widget.GridLayoutManager;
 
+import models.Ingredient;
+
 /**
  * Created by Prem on 10-11-2017.
  * This class provides all the basic methods throughout this projects
@@ -31,5 +33,15 @@ public class BasicUtility {
 
     private static int checkDeviceOrientation(Context context) {
         return context.getResources().getConfiguration().orientation;
+    }
+
+    public static String DataToShow(Ingredient mIngredient) {
+
+        String ingredientValue = mIngredient.getIngredient();
+        String measure = mIngredient.getMeasure();
+        String quantity = Double.toString(mIngredient.getQuantity());
+        String textToShow = ingredientValue + " -   " + quantity + measure;
+
+        return textToShow;
     }
 }

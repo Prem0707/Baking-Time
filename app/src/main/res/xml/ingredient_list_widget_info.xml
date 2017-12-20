@@ -3,7 +3,7 @@
     android:initialKeyguardLayout="@layout/ingredient_list_widget"
     android:initialLayout="@layout/ingredient_list_widget"
     android:minHeight="120dp"
-    android:minWidth="120dp"
+    android:minWidth="180dp"
     android:previewImage="@drawable/example_appwidget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
