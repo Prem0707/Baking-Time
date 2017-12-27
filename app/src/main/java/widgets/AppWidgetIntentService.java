@@ -18,7 +18,7 @@ public class AppWidgetIntentService extends IntentService {
     private static final String BUNDLE_RECIPE_WIDGET_DATA = "recipe_widget_data";
 
     public AppWidgetIntentService() {
-        super("RecipeWidgetService");
+        super("AppWidgetIntentService");
     }
 
     public static void startActionUpdateRecipeWidgets(Context context, Recipe recipe) {

@@ -25,6 +25,7 @@ import sharedpreference.UserPreference;
 import utils.AsyncTaskRecipe;
 import utils.Constants;
 import utils.NetworkUtils;
+import widgets.AppWidgetIntentService;
 
 public class MainActivity extends AppCompatActivity implements TaskCompleted,
         RecipeAdapter.RecyclerViewClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -114,7 +115,9 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
            int positionOfRecipe = UserPreference.getSharedPref(this);
-           UserPreference.setSharedPref(positionOfRecipe, this);
+           //Toast.makeText(this, "IngIndex" + positionOfRecipe , Toast.LENGTH_LONG).show();
+           AppWidgetIntentService.startActionUpdateRecipeWidgets(this, recipeList.get(positionOfRecipe));
+           //UserPreference.setSharedPref(positionOfRecipe, this);
 
     }
 }
