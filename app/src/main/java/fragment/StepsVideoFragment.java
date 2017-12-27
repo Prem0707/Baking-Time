@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -38,8 +37,6 @@ import models.Step;
 public class StepsVideoFragment extends Fragment {
 
 
-    private TextView mDetailedTextView;
-
     private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer player;
     private long currentPlayerPosition = 0;
@@ -55,28 +52,38 @@ public class StepsVideoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
         mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.playerView);
-        mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
+        TextView mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
+        //ImageView imageView = (ImageView) view.findViewById(R.id.imageHolder);
 
         if (savedInstanceState != null) {
             currentPlayerPosition = savedInstanceState.getLong("PLAYER_POSITION");
-            recipeSteps = savedInstanceState.getParcelable("RECIP_STEPS");
+            recipeSteps = savedInstanceState.getParcelable("RECIPE_STEPS");
         } else {
             if (getArguments() != null) {
                 recipeSteps = getArguments().getParcelable("DATA_SENT_TO_VIDEO_FRAG");
             }
         }
 
-        if(recipeSteps != null)
-        mDetailedTextView.setText(recipeSteps.getDescription());
+        if (recipeSteps != null) {
+            String mVideoURL = recipeSteps.getVideoURL();
+            String mThumbnailURL = recipeSteps.getThumbnailURL();
 
-        String mVieoURL = recipeSteps.getVideoURL();
-        if (mVieoURL != null) {
-            setupExoPlayer(mVieoURL);
-        } else {
-            Toast.makeText(getActivity(), "Video URL is empty", Toast.LENGTH_LONG).show();
+            if (mVideoURL != null) {
+                //mPlayerView.setVisibility(View.VISIBLE);
+                //imageView.setVisibility(View.INVISIBLE);
+                setupExoPlayer(mVideoURL);
+
+            } else if (mThumbnailURL != null) {
+                //mPlayerView.setVisibility(View.INVISIBLE);
+                //imageView.setVisibility(View.VISIBLE);
+                //Picasso.with(getContext()).load(mThumbnailURL).into(imageView);
+            } else {
+                //Picasso.with(getContext()).load(mThumbnailURL).placeholder(R.drawable.step_thambnail).into(imageView);
+            }
+            mDetailedTextView.setText(recipeSteps.getDescription());
         }
+            return view;
 
-        return view;
     }
 
 
@@ -133,7 +140,7 @@ public class StepsVideoFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         if (player != null) {
             outState.putLong("PLAYER_POSITION", player.getCurrentPosition());
-            outState.putParcelable("RECIP_STEPS", (Parcelable) recipeSteps);
+            outState.putParcelable("RECIPE_STEPS", (Parcelable) recipeSteps);
         }
         super.onSaveInstanceState(outState);
     }

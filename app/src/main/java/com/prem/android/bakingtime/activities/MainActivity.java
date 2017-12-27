@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -25,14 +26,14 @@ import sharedpreference.UserPreference;
 import utils.AsyncTaskRecipe;
 import utils.Constants;
 import utils.NetworkUtils;
-import widgets.AppWidgetIntentService;
+import widgets.WidgetService;
 
 public class MainActivity extends AppCompatActivity implements TaskCompleted,
         RecipeAdapter.RecyclerViewClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private RecipeAdapter adapter;
     private ProgressBar spinner;
-    ArrayList<Recipe> recipeList;
+    private static ArrayList<Recipe> recipeList;
     private RecyclerView mRecyclerView;
 
     @Override
@@ -113,11 +114,16 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-           int positionOfRecipe = UserPreference.getSharedPref(this);
-           //Toast.makeText(this, "IngIndex" + positionOfRecipe , Toast.LENGTH_LONG).show();
-           AppWidgetIntentService.startActionUpdateRecipeWidgets(this, recipeList.get(positionOfRecipe));
-           //UserPreference.setSharedPref(positionOfRecipe, this);
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        int positionOfRecipe = UserPreference.getSharedPref(this);
+        String value = sharedPreferences.getString(key, "");
+        Log.i("TAG", value);
+        new WidgetService(positionOfRecipe);
+        provideRecipeToWidget(positionOfRecipe);
 
+    }
+
+    public static Recipe provideRecipeToWidget(int position){
+        return recipeList.get(position);
     }
 }

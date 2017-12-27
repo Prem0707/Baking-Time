@@ -6,14 +6,25 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-        android:id="@+id/playerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.7"
-        app:resize_mode="fit">
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="0.7">-->
 
-    </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/playerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            app:resize_mode="fit">
+        </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
+
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:id="@+id/imageHolder"/>-->
+    <!--</FrameLayout>-->
 
 
     <TextView
