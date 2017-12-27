@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 
 public class UserPreference {
 
-    public static String INDEX_OF_RECIPE= "wideget_to_show";
+    public static String INDEX_OF_RECIPE= "ingredients_to_show";
 
     public static void setSharedPref(int recipeToShow, Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);

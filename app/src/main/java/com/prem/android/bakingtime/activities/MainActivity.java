@@ -113,8 +113,8 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-           int positionOdRecipe = UserPreference.getSharedPref(this);
-           Recipe mRecipe = recipeList.get(positionOdRecipe);
-           //new WidgetService(mRecipe);
+           int positionOfRecipe = UserPreference.getSharedPref(this);
+           UserPreference.setSharedPref(positionOfRecipe, this);
+
     }
 }
