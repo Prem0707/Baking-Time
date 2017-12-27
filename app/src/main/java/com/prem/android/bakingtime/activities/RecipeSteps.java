@@ -38,6 +38,12 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_steps);
 
+        android.support.v7.app.ActionBar actionBar = this.getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         if (savedInstanceState == null) {
             if (getIntent().getParcelableExtra(Constants.SELECTED_RECIPE) != null)
                 mRecipe = getIntent().getParcelableExtra(Constants.SELECTED_RECIPE);

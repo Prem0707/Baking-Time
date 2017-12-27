@@ -20,6 +20,12 @@ public class DetailSteps extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_steps);
 
+        android.support.v7.app.ActionBar actionBar = this.getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         if (savedInstanceState == null) {
             if (getIntent().getParcelableExtra(Constants.STEP_TO_MAKE) != null) {
                 mRecipeStep = getIntent().getParcelableExtra(Constants.STEP_TO_MAKE);

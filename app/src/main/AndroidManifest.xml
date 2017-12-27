@@ -22,9 +22,14 @@
         </activity>
         <activity
             android:name=".activities.RecipeSteps"
-            android:launchMode="singleTop" />
-        <activity android:name=".activities.DetailSteps" />
-        <activity android:name=".activities.IngredientActivity" />
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.MainActivity"/>
+
+        <activity android:name=".activities.DetailSteps"
+            android:parentActivityName=".activities.RecipeSteps"/>
+        
+        <activity android:name=".activities.IngredientActivity"
+            android:parentActivityName=".activities.MainActivity"/>
 
         <receiver android:name="widgets.IngredientWidget">
             <intent-filter>
