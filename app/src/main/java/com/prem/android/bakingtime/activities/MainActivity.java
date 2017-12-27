@@ -25,7 +25,6 @@ import sharedpreference.UserPreference;
 import utils.AsyncTaskRecipe;
 import utils.Constants;
 import utils.NetworkUtils;
-import widget.WidgetDataProvider;
 
 public class MainActivity extends AppCompatActivity implements TaskCompleted,
         RecipeAdapter.RecyclerViewClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -116,6 +115,6 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
            int positionOdRecipe = UserPreference.getSharedPref(this);
            Recipe mRecipe = recipeList.get(positionOdRecipe);
-           new WidgetDataProvider(mRecipe);
+           //new WidgetService(mRecipe);
     }
 }
