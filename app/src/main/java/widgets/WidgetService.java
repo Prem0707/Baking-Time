@@ -5,12 +5,12 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.prem.android.bakingtime.R;
-import com.prem.android.bakingtime.activities.MainActivity;
 
 import java.util.List;
 
 import models.Ingredient;
 import models.Recipe;
+import sharedpreference.UserPreference;
 
 /**
  * Created by Prem on 28-12-2017.
@@ -18,14 +18,8 @@ import models.Recipe;
 
 public class WidgetService extends RemoteViewsService {
     List<Ingredient> ingredients;
-    int mPosition;
-
-    public WidgetService(){}
 
 
-    public WidgetService(int position) {
-        this.mPosition = position;
-    }
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -86,7 +80,7 @@ public class WidgetService extends RemoteViewsService {
     }
 
     private void initData() {
-        Recipe recipes = MainActivity.provideRecipeToWidget(mPosition);
+        Recipe recipes = UserPreference.getSharedPref();
         if (recipes != null) {
             ingredients = recipes.getIngredients();
         }

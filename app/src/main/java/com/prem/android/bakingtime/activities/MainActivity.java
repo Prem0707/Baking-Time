@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -26,15 +25,16 @@ import sharedpreference.UserPreference;
 import utils.AsyncTaskRecipe;
 import utils.Constants;
 import utils.NetworkUtils;
-import widgets.WidgetService;
 
 public class MainActivity extends AppCompatActivity implements TaskCompleted,
         RecipeAdapter.RecyclerViewClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private RecipeAdapter adapter;
     private ProgressBar spinner;
+    private int positionForWidget;
     private static ArrayList<Recipe> recipeList;
     private RecyclerView mRecyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
         adapter = new RecipeAdapter(this, MainActivity.this);
 
         if (savedInstanceState != null) {
-            this.recipeList = savedInstanceState.getParcelableArrayList(Constants.RECIPE_LIST);
+            recipeList = savedInstanceState.getParcelableArrayList(Constants.RECIPE_LIST);
             adapter.setDataset(recipeList);
             Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable("BUNDLE_RECYCLER_LAYOUT");
             mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
 
     @Override
     public void onTaskCompleted(ArrayList<Recipe> mRecipe) {
-        this.recipeList = mRecipe;
+        recipeList = mRecipe;
         // now recipeList has data
         adapter.setDataset(recipeList);
         spinner.setVisibility(View.INVISIBLE);
@@ -89,9 +89,10 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
 
     @Override
     public void onRecipeClick(int positionOfSelectedRecipe) {
-        UserPreference.setSharedPref(positionOfSelectedRecipe, this);
+        positionForWidget = positionOfSelectedRecipe;
         Intent recipeSteps = new Intent(this, RecipeSteps.class);
         recipeSteps.putExtra(Constants.SELECTED_RECIPE, (Parcelable) recipeList.get(positionOfSelectedRecipe));
+        UserPreference.setSharedPref(recipeList.get(positionOfSelectedRecipe), this);
         startActivity(recipeSteps);
     }
 
@@ -115,15 +116,6 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        int positionOfRecipe = UserPreference.getSharedPref(this);
-        String value = sharedPreferences.getString(key, "");
-        Log.i("TAG", value);
-        new WidgetService(positionOfRecipe);
-        provideRecipeToWidget(positionOfRecipe);
-
-    }
-
-    public static Recipe provideRecipeToWidget(int position){
-        return recipeList.get(position);
+        UserPreference.setSharedPref(recipeList.get(positionForWidget), this);
     }
 }

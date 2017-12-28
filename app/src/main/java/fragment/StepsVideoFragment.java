@@ -9,7 +9,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -28,6 +30,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.prem.android.bakingtime.R;
+import com.squareup.picasso.Picasso;
 
 import models.Step;
 
@@ -53,7 +56,7 @@ public class StepsVideoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
         mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.playerView);
         TextView mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
-        //ImageView imageView = (ImageView) view.findViewById(R.id.imageHolder);
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
 
         if (savedInstanceState != null) {
             currentPlayerPosition = savedInstanceState.getLong("PLAYER_POSITION");
@@ -69,16 +72,13 @@ public class StepsVideoFragment extends Fragment {
             String mThumbnailURL = recipeSteps.getThumbnailURL();
 
             if (mVideoURL != null) {
-                //mPlayerView.setVisibility(View.VISIBLE);
-                //imageView.setVisibility(View.INVISIBLE);
                 setupExoPlayer(mVideoURL);
 
             } else if (mThumbnailURL != null) {
-                //mPlayerView.setVisibility(View.INVISIBLE);
-                //imageView.setVisibility(View.VISIBLE);
-                //Picasso.with(getContext()).load(mThumbnailURL).into(imageView);
+                Picasso.with(getContext()).load(Uri.parse(mThumbnailURL)).into(imageView);
             } else {
-                //Picasso.with(getContext()).load(mThumbnailURL).placeholder(R.drawable.step_thambnail).into(imageView);
+                //Can use bitmap to show image or can place placeholder
+                Toast.makeText(getContext(), "Video and Thumbnail Url are not available", Toast.LENGTH_LONG).show();
             }
             mDetailedTextView.setText(recipeSteps.getDescription());
         }
