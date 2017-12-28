@@ -48,9 +48,9 @@ public class WidgetService extends RemoteViewsService {
                 Ingredient ingredient = ingredients.get(position);
                 RemoteViews view = new RemoteViews(getApplicationContext().getPackageName(), R.layout.ingredient_list_content_for_widgets);
 
-                view.setTextViewText(R.id.ingredient, ingredient.getIngredient());
-                view.setTextViewText(R.id.measure, ingredient.getMeasure());
-                view.setTextViewText(R.id.quantity, "Quantity:" + ingredient.getQuantity());
+                view.setTextViewText(R.id.ingredient, ingredient.getIngredient() + "-" + ingredient.getQuantity()
+                                                       + ingredient.getMeasure() );
+
 
                 return view;
             }

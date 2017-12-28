@@ -1,48 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:padding="5dp">
 
     <TextView
-        tools:text="Farinha"
+        tools:text="Sugar -5 Cups"
         android:id="@+id/ingredient"
+        android:singleLine="false"
+        android:maxLines="2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_centerVertical="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/quantity"
-        android:layout_toStartOf="@+id/quantity"
         android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:textSize="24sp"/>
+        android:layout_marginStart="5dp"
+        android:textSize="15sp"/>
 
-    <TextView
-        tools:text="5"
-        android:id="@+id/quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/measure"
-        android:layout_toStartOf="@+id/measure"
-        android:textSize="24sp"/>
-
-    <TextView
-        tools:text="Cups"
-        android:id="@+id/measure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_marginLeft="16dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-        android:textSize="24sp"/>
-</RelativeLayout>
+</LinearLayout>
