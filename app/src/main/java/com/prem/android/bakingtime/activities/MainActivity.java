@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
         adapter = new RecipeAdapter(this, MainActivity.this);
 
         if (savedInstanceState != null) {
+            spinner.setVisibility(View.INVISIBLE);
             recipeList = savedInstanceState.getParcelableArrayList(Constants.RECIPE_LIST);
             adapter.setDataset(recipeList);
             Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable("BUNDLE_RECYCLER_LAYOUT");

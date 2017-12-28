@@ -44,6 +44,7 @@ public class StepsVideoFragment extends Fragment {
     private SimpleExoPlayer player;
     private long currentPlayerPosition = 0;
     private Step recipeSteps;
+    private ImageView imageView;
 
     public StepsVideoFragment() {
         // Required empty public constructor
@@ -56,7 +57,7 @@ public class StepsVideoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
         mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.playerView);
         TextView mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        imageView = (ImageView) view.findViewById(R.id.imageView);
 
         if (savedInstanceState != null) {
             currentPlayerPosition = savedInstanceState.getLong("PLAYER_POSITION");
@@ -72,9 +73,10 @@ public class StepsVideoFragment extends Fragment {
             String mThumbnailURL = recipeSteps.getThumbnailURL();
 
             if (mVideoURL != null) {
+                imageView.setVisibility(View.INVISIBLE);
                 setupExoPlayer(mVideoURL);
-
             } else if (mThumbnailURL != null) {
+                mPlayerView.setVisibility(View.VISIBLE);
                 Picasso.with(getContext()).load(Uri.parse(mThumbnailURL)).into(imageView);
             } else {
                 //Can use bitmap to show image or can place placeholder
