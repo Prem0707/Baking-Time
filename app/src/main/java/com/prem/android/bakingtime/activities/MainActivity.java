@@ -1,7 +1,5 @@
 package com.prem.android.bakingtime.activities;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -98,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
         recipeSteps.putExtra(Constants.SELECTED_RECIPE, (Parcelable) recipeList.get(positionOfSelectedRecipe));
         UserPreference.setSharedPref(recipeList.get(positionOfSelectedRecipe), this);
         startActivity(recipeSteps);
-        toUpdateWidget();
+        sendBroadcast();
     }
 
     private void callToAsyncTask(Context context) {
@@ -122,17 +120,13 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         UserPreference.setSharedPref(recipeList.get(positionForWidget), this);
+        sendBroadcast();
     }
 
-    public void toUpdateWidget(){
-        Intent intent = new Intent(getApplicationContext(), IngredientsWidgets.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-        // since it seems the onUpdate() is only fired on that:
-        int[] ids = AppWidgetManager.getInstance(getApplication())
-                .getAppWidgetIds(new ComponentName(getApplication(), IngredientsWidgets.class));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        //AppWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.widget_list);
+    private void sendBroadcast() {
+
+        Intent intent = new Intent(this, IngredientsWidgets.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE\"");
         sendBroadcast(intent);
     }
 }
