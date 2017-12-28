@@ -1,7 +1,5 @@
 package com.prem.android.bakingtime.activities;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -27,11 +25,6 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     private StepsVideoFragment stepsDetailFragment;
     Bundle bundle = new Bundle();
 
-    public static Intent newIntent(Context packageContext, Recipe recipe) {
-        Intent intent = new Intent(packageContext, DetailSteps.class);
-        intent.putExtra(Constants.SELECTED_RECIPE, recipe);
-        return intent;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

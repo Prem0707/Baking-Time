@@ -46,8 +46,7 @@
             android:id="@+id/widget_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/ingredient_list_content_for_widgets">
-        </ListView>
+            tools:listitem="@layout/ingredient_list_content_for_widgets"></ListView>
 
     </LinearLayout>
 

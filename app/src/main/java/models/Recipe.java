@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by Prem on 28-10-2017.
  */
 
-public class Recipe implements Parcelable{
+public class Recipe implements Parcelable {
 
     private int id;
     private int servings;
@@ -28,7 +28,7 @@ public class Recipe implements Parcelable{
         this.steps = steps;
     }
 
-    public Recipe(){
+    public Recipe() {
 
     }
 

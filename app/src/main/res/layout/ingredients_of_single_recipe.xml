@@ -22,7 +22,7 @@
             android:inputType="textMultiLine"
             android:textColor="#000"
             android:textSize="18sp" />
-        
+
     </android.support.v7.widget.CardView>
 
 </LinearLayout>

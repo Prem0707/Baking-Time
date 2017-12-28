@@ -84,7 +84,7 @@ public class StepsVideoFragment extends Fragment {
             }
             mDetailedTextView.setText(recipeSteps.getDescription());
         }
-            return view;
+        return view;
 
     }
 
@@ -150,6 +150,5 @@ public class StepsVideoFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 }

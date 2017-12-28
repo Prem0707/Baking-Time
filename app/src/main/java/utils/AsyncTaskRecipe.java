@@ -27,7 +27,6 @@ public class AsyncTaskRecipe extends AsyncTask<Void, Void, ArrayList<Recipe>> {
     }
 
 
-
     @Override
     protected ArrayList<Recipe> doInBackground(Void... voids) {
 
@@ -42,9 +41,9 @@ public class AsyncTaskRecipe extends AsyncTask<Void, Void, ArrayList<Recipe>> {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if(responseForRecipe != null) {
+                if (responseForRecipe != null) {
                     return recipeJsonParcer.getRecipeData(responseForRecipe);
-                }else{
+                } else {
                     Log.v("TAG", "responseFromAPI is null");
                 }
             } catch (JSONException e) {

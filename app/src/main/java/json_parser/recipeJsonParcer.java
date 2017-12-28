@@ -17,15 +17,15 @@ import models.Step;
 
 public class recipeJsonParcer {
 
-    public static ArrayList<Recipe> getRecipeData (String mRecipeData) throws JSONException{
+    public static ArrayList<Recipe> getRecipeData(String mRecipeData) throws JSONException {
 
         ArrayList<Recipe> mRecipe = new ArrayList<>();
 
-        if(mRecipeData != null){
+        if (mRecipeData != null) {
 
             JSONArray arrayOFJsonObject = new JSONArray(mRecipeData);
 
-            for(int i=0; i<arrayOFJsonObject.length(); i++){
+            for (int i = 0; i < arrayOFJsonObject.length(); i++) {
                 Recipe recipe = new Recipe();
 
                 JSONObject objectForEachRecipe = arrayOFJsonObject.getJSONObject(i);
@@ -34,7 +34,7 @@ public class recipeJsonParcer {
                 recipe.setImage(objectForEachRecipe.getString("image"));
                 recipe.setServings(objectForEachRecipe.getInt("servings"));
 
-                ArrayList<Ingredient> ingredients  = new ArrayList<>();
+                ArrayList<Ingredient> ingredients = new ArrayList<>();
                 JSONArray arrayOfIngredients = objectForEachRecipe.getJSONArray("ingredients");
 
                 for (int p = 0; p < arrayOfIngredients.length(); p++) {

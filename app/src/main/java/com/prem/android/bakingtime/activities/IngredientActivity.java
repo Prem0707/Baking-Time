@@ -11,17 +11,21 @@ import com.prem.android.bakingtime.R;
 import java.util.ArrayList;
 
 import adapters.IngredientsAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import models.Ingredient;
 
 public class IngredientActivity extends AppCompatActivity {
 
     private ArrayList<Ingredient> mIngredients;
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.ingredients_recyclerView)
+    RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredient);
+        ButterKnife.bind(this);
 
         android.support.v7.app.ActionBar actionBar = this.getSupportActionBar();
 
@@ -29,7 +33,7 @@ public class IngredientActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.ingredients_recyclerView);
+        //mRecyclerView = (RecyclerView) findViewById(R.id.ingredients_recyclerView);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);

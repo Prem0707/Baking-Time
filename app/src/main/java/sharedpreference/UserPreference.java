@@ -14,7 +14,7 @@ import models.Recipe;
 
 public class UserPreference {
 
-    private static String RECIPE_TO_SHOW= "ingredients_to_show";
+    private static String RECIPE_TO_SHOW = "ingredients_to_show";
 
     public static void setSharedPref(Recipe mRecipe, Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -28,7 +28,7 @@ public class UserPreference {
     public static Recipe getSharedPref(Context context) {
         Gson gson = new Gson();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String json= preferences.getString(RECIPE_TO_SHOW, "Nothing Here to Show");
+        String json = preferences.getString(RECIPE_TO_SHOW, "Nothing Here to Show");
         return gson.fromJson(json, Recipe.class);
     }
 }

@@ -94,11 +94,11 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
         stepsOfMaking = mSteps.get(positionOfSelectedStep);
-        if(!BasicUtility.tabletMode()) {
+        if (!BasicUtility.tabletMode()) {
             Intent toIngredientAndSteps = new Intent(getActivity(), DetailSteps.class);
             toIngredientAndSteps.putExtra(Constants.STEP_TO_MAKE, (Parcelable) stepsOfMaking);
             startActivity(toIngredientAndSteps);
-        }else{
+        } else {
             try {
                 mCallback = (OnHeadlineSelectedListener) getActivity();
             } catch (ClassCastException e) {

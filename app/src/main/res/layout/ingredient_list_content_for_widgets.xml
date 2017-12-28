@@ -6,15 +6,15 @@
     android:padding="5dp">
 
     <TextView
-        tools:text="Sugar -5 Cups"
         android:id="@+id/ingredient"
-        android:singleLine="false"
-        android:maxLines="2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceListItem"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"
-        android:textSize="15sp"/>
+        android:maxLines="2"
+        android:singleLine="false"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="15sp"
+        tools:text="Sugar -5 Cups" />
 
 </LinearLayout>
