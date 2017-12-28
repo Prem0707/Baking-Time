@@ -14,11 +14,10 @@ import models.Recipe;
 
 public class UserPreference {
 
-    public static String RECIPE_TO_SHOW= "ingredients_to_show";
-    private static SharedPreferences preferences;
+    private static String RECIPE_TO_SHOW= "ingredients_to_show";
 
     public static void setSharedPref(Recipe mRecipe, Context context) {
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(mRecipe); // Converting json to string
@@ -26,11 +25,10 @@ public class UserPreference {
         editor.apply();
     }
 
-    public static Recipe getSharedPref() {
+    public static Recipe getSharedPref(Context context) {
         Gson gson = new Gson();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String json= preferences.getString(RECIPE_TO_SHOW, "Nothing Here to Show");
-        Recipe recipe = gson.fromJson(json, Recipe.class);
-        return recipe;
-        //0 is default parameter
+        return gson.fromJson(json, Recipe.class);
     }
 }

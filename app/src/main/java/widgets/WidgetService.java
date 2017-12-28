@@ -19,8 +19,6 @@ import sharedpreference.UserPreference;
 public class WidgetService extends RemoteViewsService {
     List<Ingredient> ingredients;
 
-
-
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new RemoteViewsFactory() {
@@ -52,7 +50,7 @@ public class WidgetService extends RemoteViewsService {
 
                 view.setTextViewText(R.id.ingredient, ingredient.getIngredient());
                 view.setTextViewText(R.id.measure, ingredient.getMeasure());
-                view.setTextViewText(R.id.quantity, "ingredient.getQuantity()");
+                view.setTextViewText(R.id.quantity, "Quantity:" + ingredient.getQuantity());
 
                 return view;
             }
@@ -80,7 +78,7 @@ public class WidgetService extends RemoteViewsService {
     }
 
     private void initData() {
-        Recipe recipes = UserPreference.getSharedPref();
+        Recipe recipes = UserPreference.getSharedPref(this.getApplicationContext());
         if (recipes != null) {
             ingredients = recipes.getIngredients();
         }
