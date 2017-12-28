@@ -73,13 +73,13 @@ public class StepsVideoFragment extends Fragment {
             String mThumbnailURL = recipeSteps.getThumbnailURL();
 
             if (mVideoURL != null) {
-                imageView.setVisibility(View.INVISIBLE);
+                imageView.setVisibility(View.GONE);
                 setupExoPlayer(mVideoURL);
             } else if (mThumbnailURL != null) {
-                mPlayerView.setVisibility(View.VISIBLE);
+                mPlayerView.setVisibility(View.GONE);
                 Picasso.with(getContext()).load(Uri.parse(mThumbnailURL)).into(imageView);
             } else {
-                //Can use bitmap to show image or can place placeholder
+                //It will show place Holder for image
                 Toast.makeText(getContext(), "Video and Thumbnail Url are not available", Toast.LENGTH_LONG).show();
             }
             mDetailedTextView.setText(recipeSteps.getDescription());
