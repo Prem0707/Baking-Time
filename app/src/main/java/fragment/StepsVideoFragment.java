@@ -46,6 +46,7 @@ public class StepsVideoFragment extends Fragment {
     private SimpleExoPlayer player;
     private long currentPlayerPosition = 0;
     private Step recipeSteps;
+    private String mVideoURL;
     @BindView(R.id.imageView) ImageView imageView;
     @BindView(R.id.detailed_description) TextView mDetailedTextView;
 
@@ -70,7 +71,7 @@ public class StepsVideoFragment extends Fragment {
         }
 
         if (recipeSteps != null) {
-            String mVideoURL = recipeSteps.getVideoURL();
+            mVideoURL = recipeSteps.getVideoURL();
             String mThumbnailURL = recipeSteps.getThumbnailURL();
 
             if (mVideoURL != null) {
@@ -130,6 +131,16 @@ public class StepsVideoFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (mVideoURL != null) {
+            if (player != null) {
+                player.seekTo(currentPlayerPosition);
+            }
+        }
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
 
@@ -148,14 +159,6 @@ public class StepsVideoFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        if(player == null && recipeSteps != null){
-            String mVideoURL = recipeSteps.getVideoURL();
-            setupExoPlayer(mVideoURL);
-        }
-    }
     @Override
     public void onDestroy() {
         super.onDestroy();
