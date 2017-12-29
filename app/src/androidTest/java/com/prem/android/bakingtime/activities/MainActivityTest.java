@@ -42,13 +42,6 @@ public class MainActivityTest {
                                 0)));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        ViewInteraction recyclerView2 = onView(
-                allOf(withId(R.id.recipe_recyclerView),
-                        childAtPosition(
-                                withClassName(is("android.widget.FrameLayout")),
-                                0)));
-        recyclerView2.perform(actionOnItemAtPosition(0, click()));
-
     }
 
     private static Matcher<View> childAtPosition(
