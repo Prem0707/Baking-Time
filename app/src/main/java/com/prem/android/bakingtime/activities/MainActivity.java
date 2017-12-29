@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
         spinner.setVisibility(View.VISIBLE);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recipe_recyclerView);
-        mRecyclerView.setHasFixedSize(true);
+        //mRecyclerView.setHasFixedSize(true);
         GridLayoutManager mGridLayoutManager = BasicUtility.gridLayoutManagerAccordingToOrientation(this);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         adapter = new RecipeAdapter(this, MainActivity.this);

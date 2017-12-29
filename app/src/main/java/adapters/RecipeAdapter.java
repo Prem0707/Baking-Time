@@ -29,7 +29,6 @@ import static android.support.v7.widget.RecyclerView.ViewHolder;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-
     private ArrayList<Recipe> mRecipeDetails;
     private final RecyclerViewClickListener mClickHandler;
     private Context mContext;
@@ -68,24 +67,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, final int position) {
 
-        Recipe currentRecipe = mRecipeDetails.get(position);
+        final Recipe currentRecipe = mRecipeDetails.get(position);
         String recipeName = currentRecipe.getName();
         int servings = currentRecipe.getServings();
 
         holder.mRecipeName.setText(recipeName);
         holder.mRecipeServing.setText("Servings:" + servings);
-        if (mRecipeDetails.get(position).getImage() == null) {
-            holder.mRecipeImage.setImageBitmap(RecipeImageProvider.provideRecipeImage(mContext.getResources(), position));
-        }else {
-            Picasso.with(mContext).load(Uri.parse(mRecipeDetails.get(position).getImage()));
-        }
 
+        if (currentRecipe.getImage() != null && !currentRecipe.getImage().equals("")) {
+            Picasso.with(mContext).load(Uri.parse(currentRecipe.getImage())).into(holder.mRecipeImage);
+        } else {
+            holder.mRecipeImage.setImageBitmap(RecipeImageProvider.provideRecipeImage(mContext.getResources(), position));
+        }
         holder.mIngredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // handle for ingredients
                 Intent intent = new Intent(mContext, IngredientActivity.class);
-                intent.putParcelableArrayListExtra("RECIPE_INGREDIENTS", mRecipeDetails.get(position).getIngredients());
+                intent.putParcelableArrayListExtra("RECIPE_INGREDIENTS",currentRecipe.getIngredients());
                 mContext.startActivity(intent);
             }
         });
