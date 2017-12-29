@@ -18,8 +18,7 @@ public class BasicUtility {
     //Checking the either app is running on tablet or not
     public static boolean tabletMode() {
         Configuration resources = Resources.getSystem().getConfiguration();
-        return (resources.smallestScreenWidthDp >= 600
-                && resources.orientation == Configuration.ORIENTATION_LANDSCAPE);
+        return (resources.smallestScreenWidthDp >= 600);
     }
 
     public static GridLayoutManager gridLayoutManagerAccordingToOrientation(Context mContext) {
