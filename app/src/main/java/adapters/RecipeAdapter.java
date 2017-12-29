@@ -2,6 +2,7 @@ package adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.prem.android.bakingtime.R;
 import com.prem.android.bakingtime.activities.IngredientActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -72,7 +74,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         holder.mRecipeName.setText(recipeName);
         holder.mRecipeServing.setText("Servings:" + servings);
-        holder.mRecipeImage.setImageBitmap(RecipeImageProvider.provideRecipeImage(mContext.getResources(), position));
+        if (mRecipeDetails.get(position).getImage() == null) {
+            holder.mRecipeImage.setImageBitmap(RecipeImageProvider.provideRecipeImage(mContext.getResources(), position));
+        }else {
+            Picasso.with(mContext).load(Uri.parse(mRecipeDetails.get(position).getImage()));
+        }
 
         holder.mIngredients.setOnClickListener(new View.OnClickListener() {
             @Override
