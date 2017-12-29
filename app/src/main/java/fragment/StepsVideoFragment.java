@@ -32,6 +32,8 @@ import com.google.android.exoplayer2.util.Util;
 import com.prem.android.bakingtime.R;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import models.Step;
 
 /**
@@ -40,11 +42,12 @@ import models.Step;
 public class StepsVideoFragment extends Fragment {
 
 
-    private SimpleExoPlayerView mPlayerView;
+    @BindView(R.id.playerView) SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer player;
     private long currentPlayerPosition = 0;
     private Step recipeSteps;
-    private ImageView imageView;
+    @BindView(R.id.imageView) ImageView imageView;
+    @BindView(R.id.detailed_description) TextView mDetailedTextView;
 
     public StepsVideoFragment() {
         // Required empty public constructor
@@ -55,9 +58,7 @@ public class StepsVideoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
-        mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.playerView);
-        TextView mDetailedTextView = (TextView) view.findViewById(R.id.detailed_description);
-        imageView = (ImageView) view.findViewById(R.id.imageView);
+        ButterKnife.bind(this, view);
 
         if (savedInstanceState != null) {
             currentPlayerPosition = savedInstanceState.getLong("PLAYER_POSITION");

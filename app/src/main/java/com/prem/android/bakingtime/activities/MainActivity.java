@@ -18,6 +18,8 @@ import com.prem.android.bakingtime.R;
 import java.util.ArrayList;
 
 import adapters.RecipeAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import extras.BasicUtility;
 import interfaces.TaskCompleted;
 import models.Recipe;
@@ -31,22 +33,20 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted,
         RecipeAdapter.RecyclerViewClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private RecipeAdapter adapter;
-    private ProgressBar spinner;
+    @BindView(R.id.progress_bar) ProgressBar spinner;
     private int positionForWidget;
     private static ArrayList<Recipe> recipeList;
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.recipe_recyclerView) RecyclerView mRecyclerView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this); //Bind butterknife with MainActivity
 
-        spinner = (ProgressBar) findViewById(R.id.progress_bar);
         spinner.setVisibility(View.VISIBLE);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recipe_recyclerView);
-        //mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setHasFixedSize(true);
         GridLayoutManager mGridLayoutManager = BasicUtility.gridLayoutManagerAccordingToOrientation(this);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         adapter = new RecipeAdapter(this, MainActivity.this);

@@ -18,8 +18,7 @@ import models.Ingredient;
 public class IngredientActivity extends AppCompatActivity {
 
     private ArrayList<Ingredient> mIngredients;
-    @BindView(R.id.ingredients_recyclerView)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.ingredients_recyclerView) RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,7 @@ public class IngredientActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        //mRecyclerView = (RecyclerView) findViewById(R.id.ingredients_recyclerView);
+        mRecyclerView = (RecyclerView) findViewById(R.id.ingredients_recyclerView);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);

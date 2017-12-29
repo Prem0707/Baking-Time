@@ -12,7 +12,7 @@ import utils.Constants;
 public class DetailSteps extends AppCompatActivity {
 
     private Step mRecipeStep;
-    StepsVideoFragment stepsDetailFragment;
+    private StepsVideoFragment stepsDetailFragment;
 
 
     @Override

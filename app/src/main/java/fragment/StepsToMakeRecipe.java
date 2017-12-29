@@ -18,6 +18,8 @@ import com.prem.android.bakingtime.activities.DetailSteps;
 import java.util.ArrayList;
 
 import adapters.RecipeStepsAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import extras.BasicUtility;
 import models.Step;
 import utils.Constants;
@@ -28,10 +30,9 @@ import utils.Constants;
 public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.RecViewListener {
 
     private ArrayList<Step> mSteps;
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.ingredient_recyclerview) RecyclerView mRecyclerView;
     private RecipeStepsAdapter mRecipeStepsAdapter;
     OnHeadlineSelectedListener mCallback;
-    private Step stepsOfMaking;
 
     public StepsToMakeRecipe() {
         // Required empty public constructor
@@ -46,6 +47,7 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
         if (getArguments() != null) {
             mSteps = getArguments().getParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE");
         } else {
@@ -53,9 +55,9 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
         }
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_steps_to_make_recipe, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.ingredient_recyclerview);
-        mRecyclerView.setHasFixedSize(true);
+        ButterKnife.bind(this, view);
 
+        mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -93,7 +95,7 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
 
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
-        stepsOfMaking = mSteps.get(positionOfSelectedStep);
+        Step stepsOfMaking = mSteps.get(positionOfSelectedStep);
         if (!BasicUtility.tabletMode()) {
             Intent toIngredientAndSteps = new Intent(getActivity(), DetailSteps.class);
             toIngredientAndSteps.putExtra(Constants.STEP_TO_MAKE, (Parcelable) stepsOfMaking);
