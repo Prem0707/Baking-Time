@@ -149,6 +149,14 @@ public class StepsVideoFragment extends Fragment {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        if(player == null && recipeSteps != null){
+            String mVideoURL = recipeSteps.getVideoURL();
+            setupExoPlayer(mVideoURL);
+        }
+    }
+    @Override
     public void onDestroy() {
         super.onDestroy();
     }
