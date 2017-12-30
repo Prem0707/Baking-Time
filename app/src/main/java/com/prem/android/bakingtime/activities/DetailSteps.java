@@ -61,4 +61,3 @@ public class DetailSteps extends AppCompatActivity {
     }
 }
 
-
