@@ -25,17 +25,15 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     private RecViewListener mRecViewListener;
     Context mContext;
 
+
     public interface RecViewListener{
         void onStepClicked(int positionOfSelectedStep);
     }
 
     public RecipeStepsAdapter(RecViewListener recViewListener){
         this.mRecViewListener = recViewListener;
-    }
-    public RecipeStepsAdapter(Context context){
-        this.mContext = context;
-    }
 
+    }
 
     /**
      * Called when RecyclerView needs a new of the given type to represent an item.
@@ -106,7 +104,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mRecViewListener.onStepClicked(getAdapterPosition());
+                    mRecViewListener.onStepClicked((getAdapterPosition()));
                 }
             });
         }
