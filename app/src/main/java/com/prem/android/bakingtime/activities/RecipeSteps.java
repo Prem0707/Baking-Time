@@ -25,7 +25,6 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     private StepsVideoFragment stepsDetailFragment;
     Bundle bundle = new Bundle();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +39,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         if (savedInstanceState == null) {
             if (getIntent().getParcelableExtra(Constants.SELECTED_RECIPE) != null)
                 mRecipe = getIntent().getParcelableExtra(Constants.SELECTED_RECIPE);
-            mActionBarName = mRecipe.getName();
+                mActionBarName = mRecipe.getName();
         } else {
             mRecipe = savedInstanceState.getParcelable(Constants.RECIPE_OBJECT);
             mActionBarName = savedInstanceState.getString("ACTION_BAR_NAME");
@@ -50,7 +49,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         // get the fragment manager to handle transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (savedInstanceState == null || fragmentManager == null) {
+        if (savedInstanceState == null ) {
             fragmentRecipe = new StepsToMakeRecipe();
             bundle.putParcelableArrayList("DATA_TO_STEP_TO_MAKE_RECIPE", mRecipe.getSteps());
             Toast.makeText(this, "Created Recipe fragment", Toast.LENGTH_LONG).show();
@@ -66,7 +65,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
 
 
         if (BasicUtility.tabletMode()) {
-            if (savedInstanceState == null || stepsDetailFragment == null) {
+            if (savedInstanceState == null && stepsDetailFragment == null) {
                 //In two pane mode, add detail fragment fragments
                 stepsDetailFragment = new StepsVideoFragment();
                 Toast.makeText(this, "Created new Video fragment", Toast.LENGTH_LONG).show();
