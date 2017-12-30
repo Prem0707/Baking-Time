@@ -1,8 +1,6 @@
 package com.prem.android.bakingtime.activities;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -15,11 +13,10 @@ import fragment.StepsToMakeRecipe;
 import fragment.StepsVideoFragment;
 import models.Recipe;
 import models.Step;
-import sharedpreference.PrefForSteps;
 import utils.Constants;
 
 public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter.RecViewListener,
-        StepsToMakeRecipe.OnHeadlineSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener{
+        StepsToMakeRecipe.OnHeadlineSelectedListener {
 
     private Recipe mRecipe;
     private int mSelectedStepPosition;
@@ -105,8 +102,22 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
         mSelectedStepPosition = positionOfSelectedStep;
+        changeVideoStep(positionOfSelectedStep);
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        PrefForSteps.setSharedPref(mSelectedStepPosition, this);
+        //PrefForSteps.setSharedPref(mSelectedStepPosition, this);
+    }
+
+    private void changeVideoStep(int positionOfSelectedStep) {
+        if (BasicUtility.tabletMode()) {
+            stepsDetailFragment = new StepsVideoFragment();
+            //int stepWanted = PrefForSteps.getSharedPref(this);
+            Step mStep = mRecipe.getSteps().get(positionOfSelectedStep);
+            bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", mStep);
+            stepsDetailFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
+                    .commit();
+        }
     }
 
     @Override
@@ -118,30 +129,30 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     @Override
     public void onResume(){
         super.onResume();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.registerOnSharedPreferenceChangeListener(this);
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //prefs.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //Cleanup the shared preference listener
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.unregisterOnSharedPreferenceChangeListener(this);
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-
-        if(BasicUtility.tabletMode()) {
-            stepsDetailFragment = new StepsVideoFragment();
-            int stepWanted = PrefForSteps.getSharedPref(this);
-            Step mStep = mRecipe.getSteps().get(stepWanted);
-            bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", mStep);
-            stepsDetailFragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
-                    .commit();
-        }
-    }
+//    @Override
+//    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+//
+//        if(BasicUtility.tabletMode()) {
+//            stepsDetailFragment = new StepsVideoFragment();
+//            int stepWanted = PrefForSteps.getSharedPref(this);
+//            Step mStep = mRecipe.getSteps().get(stepWanted);
+//            bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", mStep);
+//            stepsDetailFragment.setArguments(bundle);
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
+//                    .commit();
+//        }
+//    }
 }
