@@ -65,22 +65,44 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
 
 
         if (BasicUtility.tabletMode()) {
-            if (savedInstanceState == null && stepsDetailFragment == null) {
-                //In two pane mode, add detail fragment fragments
-                stepsDetailFragment = new StepsVideoFragment();
-                Toast.makeText(this, "Created new Video fragment", Toast.LENGTH_LONG).show();
-                Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
-                bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", mStep);
-                stepsDetailFragment.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
-                        .commit();
-            } else {
+            if(savedInstanceState != null){
                 Toast.makeText(this, "Using already Saved Video fragment", Toast.LENGTH_LONG).show();
                 stepsDetailFragment = (StepsVideoFragment) getSupportFragmentManager()
                         .getFragment(savedInstanceState, "VIDEO_FRAG");
+            }else if(stepsDetailFragment == null){
+                createNewDetailFragment();
+            }else{
+                createNewDetailFragment();
             }
+
+//            if (savedInstanceState == null || stepsDetailFragment == null) {
+//                //In two pane mode, add detail fragment fragments
+//                stepsDetailFragment = new StepsVideoFragment();
+//                Toast.makeText(this, "Created new Video fragment", Toast.LENGTH_LONG).show();
+//                Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
+//                bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", mStep);
+//                stepsDetailFragment.setArguments(bundle);
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
+//                        .commit();
+//            } else {
+//                Toast.makeText(this, "Using already Saved Video fragment", Toast.LENGTH_LONG).show();
+//                stepsDetailFragment = (StepsVideoFragment) getSupportFragmentManager()
+//                        .getFragment(savedInstanceState, "VIDEO_FRAG");
+//            }
         }
+    }
+
+    private void createNewDetailFragment() {
+        //In two pane mode, add detail fragment fragments
+        stepsDetailFragment = new StepsVideoFragment();
+        Toast.makeText(this, "Created new Video fragment", Toast.LENGTH_LONG).show();
+        Step mStep = mRecipe.getSteps().get(mSelectedStepPosition);
+        bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", mStep);
+        stepsDetailFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
+                .commit();
     }
 
 
@@ -110,6 +132,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     public void onArticleSelected(Step stepsOfRecipe) {
         bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", stepsOfRecipe);
         stepsDetailFragment.setArguments(bundle);
+        stepsDetailFragment = new StepsVideoFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
                 .commit();
