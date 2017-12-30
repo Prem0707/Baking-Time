@@ -103,6 +103,7 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
         } else {
             try {
                 mCallback = (OnHeadlineSelectedListener) getActivity();
+                mCallback.onArticleSelected(stepsOfMaking);
             } catch (ClassCastException e) {
                 throw new ClassCastException(getActivity().toString()
                         + " must implement OnHeadlineSelectedListener");

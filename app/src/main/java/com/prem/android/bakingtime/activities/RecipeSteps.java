@@ -65,7 +65,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
 
 
         if (BasicUtility.tabletMode()) {
-            if (savedInstanceState == null || stepsDetailFragment == null) {
+            if (savedInstanceState == null && stepsDetailFragment == null) {
                 //In two pane mode, add detail fragment fragments
                 stepsDetailFragment = new StepsVideoFragment();
                 Toast.makeText(this, "Created new Video fragment", Toast.LENGTH_LONG).show();
@@ -110,5 +110,8 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     public void onArticleSelected(Step stepsOfRecipe) {
         bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", stepsOfRecipe);
         stepsDetailFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
+                .commit();
     }
 }
