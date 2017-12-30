@@ -40,7 +40,7 @@ public class StepsToMakeRecipe extends Fragment implements RecipeStepsAdapter.Re
 
     // Container Activity must implement this interface
     public interface OnHeadlineSelectedListener {
-        public void onArticleSelected(Step stepsOfRecipe);
+        void onArticleSelected(Step stepsOfRecipe);
     }
 
 

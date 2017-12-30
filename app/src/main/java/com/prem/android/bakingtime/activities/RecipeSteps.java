@@ -102,29 +102,24 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
     @Override
     public void onStepClicked(int positionOfSelectedStep) {
         mSelectedStepPosition = positionOfSelectedStep;
-        changeVideoStep(positionOfSelectedStep);
+        Toast.makeText(this, "position is:" + positionOfSelectedStep, Toast.LENGTH_LONG).show();
+        //changeVideoStep(positionOfSelectedStep);
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //PrefForSteps.setSharedPref(mSelectedStepPosition, this);
     }
 
-    private void changeVideoStep(int positionOfSelectedStep) {
-        if (BasicUtility.tabletMode()) {
-            stepsDetailFragment = new StepsVideoFragment();
-            //int stepWanted = PrefForSteps.getSharedPref(this);
-            Step mStep = mRecipe.getSteps().get(positionOfSelectedStep);
-            bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", mStep);
-            stepsDetailFragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
-                    .commit();
-        }
-    }
-
-    @Override
-    public void onArticleSelected(Step stepsOfRecipe) {
-        bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", stepsOfRecipe);
-        stepsDetailFragment.setArguments(bundle);
-    }
+//    private void changeVideoStep(int positionOfSelectedStep) {
+//        if (BasicUtility.tabletMode()) {
+//            stepsDetailFragment = new StepsVideoFragment();
+//            //int stepWanted = PrefForSteps.getSharedPref(this);
+//            Step mStep = mRecipe.getSteps().get(positionOfSelectedStep);
+//            bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", mStep);
+//            stepsDetailFragment.setArguments(bundle);
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.view_holder_for_videos_steps, stepsDetailFragment)
+//                    .commit();
+//        }
+    //}
 
     @Override
     public void onResume(){
@@ -139,6 +134,12 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepsAdapter
         //Cleanup the shared preference listener
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //prefs.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onArticleSelected(Step stepsOfRecipe) {
+        bundle.putParcelable("DATA_SENT_TO_VIDEO_FRAG", stepsOfRecipe);
+        stepsDetailFragment.setArguments(bundle);
     }
 
 //    @Override
