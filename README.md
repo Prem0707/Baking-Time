@@ -42,7 +42,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 
 ## Project License
-Baking App is released under the Apache License.
+Baking App is released under the [Apache License](https://choosealicense.com/licenses/apache-2.0/).
 
 ```
 
